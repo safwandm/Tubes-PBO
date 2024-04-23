@@ -12,10 +12,14 @@ import java.util.ArrayList;
  * @author daman1k
  */
 public class KatalogM {
-    public ArrayList<Motor> listMotor = new ArrayList<Motor>();    
+    private ArrayList<Motor> listMotor = new ArrayList<Motor>();    
+
+    public ArrayList<Motor> getListMotor() {
+        return listMotor;
+    }
     
     public void addMotor(Motor m) {
-        listMotor.add(m);
+        listMotor.add(m);    
     }
     
     public void removeMotor(Motor m) {

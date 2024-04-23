@@ -13,21 +13,25 @@ import java.util.ArrayList;
  */
 public class Mitra extends User {
     
-    Motor disewa;
+    private Motor disewakan;
 
     public Mitra(String username, String password, int age) {
         super(username, password, age);
+    }
+
+    public Motor getDisewa() {
+        return disewakan;
     }
     
     @Override
     public void UserInfo() {
         System.out.printf("\nNama: %s\nUmur: %s\nMotor yang disewakan: ", this.getUsername(), this.getAge());
-        if (disewa != null) {
-            System.out.println(disewa.getNama());
-            System.out.println("Harga sewa: "+disewa.getHargaSewa());
+        if (disewakan != null) {
+            System.out.println(disewakan.getNama());
+            System.out.println("Harga sewa: "+disewakan.getHargaSewa());
             
-            if (!disewa.isTersedia()) {
-                System.out.println("Penyewa: " + disewa.getPenyewa().getUsername());
+            if (!disewakan.isTersedia()) {
+                System.out.println("Penyewa: " + disewakan.getPenyewa().getUsername());
             }
             
         } else {
@@ -35,12 +39,22 @@ public class Mitra extends User {
         }
     }
     
-    public void menyewakanM(Motor m, KatalogM katalog) {
-        katalog.addMotor(m);
-        disewa = m;
+    public void menyewakanM(Motor m, KatalogM k) {
+        if (disewakan == null) {
+            k.addMotor(m);
+            disewakan = m;
+            System.out.printf("\n%s telah berhasil disewakan\n", m.getNama());
+        } else {
+            System.out.println("\nAnda sudah menyewakan: "+disewakan.getNama());
+        }
     }   
-    public void mencabutM(KatalogM katalog) {
-        katalog.removeMotor(disewa);
-        disewa = null;
+    public void mencabutM(KatalogM k) {
+        if (disewakan.isTersedia()) {
+            k.removeMotor(disewakan);
+            disewakan = null;
+            System.out.println("\nMotor teah berhasil dicabut");
+        } else {
+            System.out.println("\nMotor sedang disewa pelanggan");
+        }
     } 
 }

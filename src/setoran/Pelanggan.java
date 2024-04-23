@@ -16,18 +16,24 @@ public class Pelanggan extends User {
     public Pelanggan(String username, String password, int age) {
         super(username, password, age);
     }
+
+    public Motor getSewa() {
+        return sewa;
+    }
     
     public void sewaM(int m, KatalogM k) {
-        
-        if (sewa == null) {
-            sewa = k.getMotor(m);
-            sewa.setTersedia(false);
-            sewa.setPenyewa(this);
-
+        if (!k.getListMotor().isEmpty()) {
+            if (sewa == null) {
+                sewa = k.getMotor(m);
+                sewa.setTersedia(false);
+                sewa.setPenyewa(this);
+                System.out.println("\nMotor berhasil disewa");
+            } else {
+                System.out.println("\nAnda sudah menyewa motor: "+sewa.getNama());
+            }       
         } else {
-            System.out.println("\nAnda sudah menyewa motor.\n");
-        }       
-
+            System.out.println("\n");
+        }
     }
     
     public void mengembalikanM(KatalogM km) {
@@ -35,6 +41,9 @@ public class Pelanggan extends User {
             sewa.setTersedia(true);
             sewa.setPenyewa(null);
             sewa = null;
+            System.out.println("\nMotor berhasil dikembalikan");
+        } else {
+            System.out.println("\nAnda sedang tidak menyewa motor apapun");
         }
     }
     
@@ -44,9 +53,9 @@ public class Pelanggan extends User {
         if (sewa != null) {
             System.out.println(sewa.getNama());
             System.out.println("Harga Sewa: "+sewa.getHargaSewa());
+            System.out.println("Pemilik: "+sewa.getPemilik().getUsername());
         } else {
             System.out.println("-");
         }
     }
-    
 }

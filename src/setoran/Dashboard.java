@@ -18,7 +18,6 @@ public class Dashboard {
     private DatabaseUser databaseUser = new DatabaseUser();
     
     public void login(){
-        System.out.println("\nsilahkan login");
 
         System.out.print("Username: ");
         String username = scanStr.nextLine();
@@ -45,13 +44,29 @@ public class Dashboard {
 
         User user = null;
         
-        System.out.println("\nsilahkan register");
-        System.out.print("username: ");
-        String username = scanStr.nextLine();
-        System.out.print("age: ");
-        int age = scanInt.nextInt();
+        String username, password;
+        int age = 0;
+                
+        
+        do {
+            System.out.print("username: ");
+            username = scanStr.nextLine();
+            if (!databaseUser.usernameExist(username)) {
+                System.out.println("\n - Username telah dipakai user lain - \n");
+            }
+        }
+        while (!databaseUser.usernameExist(username));
+        
+        do {
+            System.out.print("age: ");
+            age = scanInt.nextInt();
+            if (age < 18 || age > 90) {
+                System.out.println("\n - Input umur tidak valid, Coba lagi - \n");
+            }        }
+        while (age < 18 || age > 90); 
+        
         System.out.print("password: ");
-        String password = scanStr.nextLine();
+        password = scanStr.nextLine();
 
         while (user == null) {
         System.out.print("Mitra(M) or Pelanggan(P): ");
@@ -64,7 +79,7 @@ public class Dashboard {
                     user = new Pelanggan(username, password, age);
                     break;
                 default:
-                    System.out.println("\nInvalid input try again\n");
+                    System.out.println("\n - Input tidak valid, Coba lagi - \n");
                     continue;
             }
         }
@@ -73,5 +88,5 @@ public class Dashboard {
         currentUser = user;
 
     }
-
+    
 }

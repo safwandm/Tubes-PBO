@@ -13,6 +13,15 @@ import java.util.ArrayList;
 public class DatabaseUser {
     private List<User> registeredUser = new ArrayList<User>();
     
+    public boolean usernameExist(String username) {
+        for (User user : registeredUser){
+            if (user.getUsername().equals(username)){
+                return false;
+            }
+        }
+        return true;
+    }
+    
     public void registerUser(User user){
         registeredUser.add(user);
     }

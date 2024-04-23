@@ -11,12 +11,11 @@ package setoran;
  */
 public class Motor {
     private String nama;
-    private Mitra pemilik;
-    private Pelanggan penyewa;
+    private User pemilik, penyewa;
     private int hargaSewa;
     private boolean tersedia;
 
-    public Motor(String nama, Mitra pemilik, int hargaSewa) {
+    public Motor(String nama, User pemilik, int hargaSewa) {
         this.nama = nama;
         this.pemilik = pemilik;
         this.hargaSewa = hargaSewa;
@@ -27,11 +26,15 @@ public class Motor {
         return nama;
     }
 
-    public Pelanggan getPenyewa() {
+    public User getPemilik() {
+        return pemilik;
+    }
+    
+    public User getPenyewa() {
         return penyewa;
     }
 
-    public void setPenyewa(Pelanggan penyewa) {
+    public void setPenyewa(User penyewa) {
         this.penyewa = penyewa;
     }
 
