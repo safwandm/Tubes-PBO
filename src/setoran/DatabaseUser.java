@@ -19,7 +19,7 @@ public class DatabaseUser {
     
     public User authUser(String username, String password){
         for (User user : registeredUser){
-            if (user.getUsername() == username && user.getPassword() == password){
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)){
                 return user;
             }
         }
