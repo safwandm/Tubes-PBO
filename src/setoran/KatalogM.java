@@ -26,27 +26,8 @@ public class KatalogM {
         return listMotor.get(index);
     }
     
-//    public Motor getMotor(String nama) {
-//        for (Motor m : listMotor) {
-//            if (m.getNama() == nama) {
-//                return m;
-//            }
-//        }
-//        return null;
-//    }
     
     public ArrayList<Motor> motorAktif() {
-//        int i = 0;
-//        System.out.println("Motor aktif: ");
-//        for (Motor m : listMotor) {
-//            if (m.isTersedia()) {
-//                System.out.printf("%d. %s\n", ++i, m.getNama());
-//            }
-//        }
-//        
-//        if (i == 0) {
-//            System.out.println("Tidak ada motor yang aktif.");
-//        }
 
         ArrayList<Motor> aktif = new ArrayList<Motor>();
         for (Motor m : listMotor) {
@@ -58,17 +39,6 @@ public class KatalogM {
 
     }
     public ArrayList<Motor> motorNonAktif() {
-//        int i = 0;
-//        System.out.println("Motor tidak aktif: ");
-//        for (Motor m : listMotor) {
-//            if (!m.isTersedia()) {
-//                System.out.printf("%d. %s\n", ++i, m.getNama());
-//            }
-//        }
-//        
-//        if (i == 0) {
-//            System.out.println("Tidak ada motor yang non-aktif.");
-//        }   
 
         ArrayList<Motor> nonAktif = new ArrayList<Motor>();
         for (Motor m : listMotor) {
