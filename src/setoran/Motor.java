@@ -34,7 +34,10 @@ public class Motor {
     public void setPenyewa(Pelanggan penyewa) {
         this.penyewa = penyewa;
     }
-    
+
+    public int getHargaSewa() {
+        return hargaSewa;
+    }
     
     public boolean isTersedia() {
         return tersedia;

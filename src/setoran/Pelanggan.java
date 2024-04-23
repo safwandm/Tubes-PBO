@@ -24,7 +24,6 @@ public class Pelanggan extends User {
             sewa.setTersedia(false);
             sewa.setPenyewa(this);
 
-            
         } else {
             System.out.println("\nAnda sudah menyewa motor.\n");
         }       
@@ -44,6 +43,7 @@ public class Pelanggan extends User {
         System.out.printf("Nama: %s\nUmur: %s\nMotor yang disewa: ", this.getUsername(), this.getAge());
         if (sewa != null) {
             System.out.println(sewa.getNama());
+            System.out.println("Harga Sewa: "+sewa.getHargaSewa());
         } else {
             System.out.println("-");
         }
