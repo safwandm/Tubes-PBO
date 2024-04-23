@@ -10,5 +10,42 @@ package setoran;
  * @author daman1k
  */
 public class Motor {
+    private String nama;
+    private Mitra pemilik;
+    private Pelanggan penyewa;
+    private int hargaSewa;
+    private boolean tersedia;
+
+    public Motor(String nama, Mitra pemilik, int hargaSewa) {
+        this.nama = nama;
+        this.pemilik = pemilik;
+        this.hargaSewa = hargaSewa;
+        tersedia = true;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public Pelanggan getPenyewa() {
+        return penyewa;
+    }
+
+    public void setPenyewa(Pelanggan penyewa) {
+        this.penyewa = penyewa;
+    }
+    
+    
+    public boolean isTersedia() {
+        return tersedia;
+    }
+
+    public void setTersedia(boolean tersedia) {
+        this.tersedia = tersedia;
+    }
+
+    public void motorInfo() {
+        System.out.printf("Nama: %s\nPemilik: %s\nHarga sewa: %d\n", nama, pemilik.getUsername(), hargaSewa);
+    }
     
 }
