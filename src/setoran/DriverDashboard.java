@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class DriverDashboard {
     public static void main(String[] args) {
         Dashboard d = new Dashboard();
+        KatalogM k = new KatalogM();
         
         Scanner scan = new Scanner(System.in);
         
@@ -20,16 +21,16 @@ public class DriverDashboard {
         boolean loop = true;
         
         while (loop) {
-            System.out.print("\n1. Login\n2. Register\nInput: ");
+            System.out.print("\n1. Login\n2. Register\n0. Exit\nInput: ");
             input = scan.nextInt();
             
             if (input == 1) {
                 d.login();
-            } else {
+            } else if (input == 2) {
                 d.register();
+            } else {
+                loop = false;
             }
-            
-      
             
         }
         
