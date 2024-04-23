@@ -11,22 +11,42 @@ package setoran;
  */
 public class Pelanggan extends User {
     
-    Motor sewa = null;
+    private Motor sewa;
 
     public Pelanggan(String username, String password, int age) {
         super(username, password, age);
     }
     
-    public void menyewa(Motor m) {
-        if (sewa != null) {
-            sewa = m;
+    public void sewaM(int m, KatalogM k) {
+        
+        if (sewa == null) {
+            sewa = k.getMotor(m);
+            sewa.setTersedia(false);
+            sewa.setPenyewa(this);
+
+            
         } else {
+            System.out.println("\nAnda sudah menyewa motor.\n");
+        }       
+
+    }
+    
+    public void mengembalikanM(KatalogM km) {
+        if (sewa != null) {
+            sewa.setTersedia(true);
+            sewa.setPenyewa(null);
+            sewa = null;
         }
     }
     
     @Override
     public void UserInfo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.printf("Nama: %s\nUmur: %s\nMotor yang disewa: ", this.getUsername(), this.getAge());
+        if (sewa != null) {
+            System.out.println(sewa.getNama());
+        } else {
+            System.out.println("-");
+        }
     }
     
 }

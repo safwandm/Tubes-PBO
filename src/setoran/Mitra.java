@@ -13,17 +13,33 @@ import java.util.ArrayList;
  */
 public class Mitra extends User {
     
-    private ArrayList<Motor> motorDisewa;
+    Motor disewa;
 
     public Mitra(String username, String password, int age) {
         super(username, password, age);
     }
     
-    
-    
     @Override
     public void UserInfo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.printf("Nama: %s\nUmur: %s\n", this.getUsername(), this.getAge());
+        if (disewa != null) {
+            System.out.println("Motor yang disewakan: " + disewa.getNama());
+            
+            if (!disewa.isTersedia()) {
+                System.out.println("Penyewa: " + disewa.getPenyewa().getUsername());
+            }
+            
+        } else {
+            System.out.println("-");
+        }
     }
     
+    public void menyewakanM(Motor m, KatalogM katalog) {
+        katalog.addMotor(m);
+        disewa = m;
+    }   
+    public void mencabutM(KatalogM katalog) {
+        katalog.removeMotor(disewa);
+        disewa = null;
+    } 
 }
