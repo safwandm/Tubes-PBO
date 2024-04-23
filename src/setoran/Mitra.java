@@ -21,7 +21,7 @@ public class Mitra extends User {
     
     @Override
     public void UserInfo() {
-        System.out.printf("Nama: %s\nUmur: %s\nMotor yang disewakan: ", this.getUsername(), this.getAge());
+        System.out.printf("\nNama: %s\nUmur: %s\nMotor yang disewakan: ", this.getUsername(), this.getAge());
         if (disewa != null) {
             System.out.println(disewa.getNama());
             System.out.println("Harga sewa: "+disewa.getHargaSewa());

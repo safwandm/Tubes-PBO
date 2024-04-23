@@ -40,7 +40,7 @@ public class Pelanggan extends User {
     
     @Override
     public void UserInfo() {
-        System.out.printf("Nama: %s\nUmur: %s\nMotor yang disewa: ", this.getUsername(), this.getAge());
+        System.out.printf("\nNama: %s\nUmur: %s\nMotor yang disewa: ", this.getUsername(), this.getAge());
         if (sewa != null) {
             System.out.println(sewa.getNama());
             System.out.println("Harga Sewa: "+sewa.getHargaSewa());

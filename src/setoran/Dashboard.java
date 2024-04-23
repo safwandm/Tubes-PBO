@@ -45,7 +45,8 @@ public class Dashboard {
 
         User user = null;
         
-        System.out.print("\nusername: ");
+        System.out.println("\nsilahkan register");
+        System.out.print("username: ");
         String username = scanStr.nextLine();
         System.out.print("age: ");
         int age = scanInt.nextInt();
@@ -67,9 +68,7 @@ public class Dashboard {
                     continue;
             }
         }
-        
-        System.out.println("--------"+user.getUsername()+user.getPassword());
-        
+                
         databaseUser.registerUser(user);
         currentUser = user;
 

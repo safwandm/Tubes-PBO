@@ -38,23 +38,33 @@ public class DriverDashboard {
             while (d.currentUser != null) {
                 if (d.currentUser instanceof Pelanggan) {
                     Pelanggan user = (Pelanggan)d.currentUser;
-                    System.out.print("\n1. Sewa motor\n2. Info\n0. Logout\nInput: ");
+                    System.out.print("\n1. Sewa motor\n2. Mengembalikan\n3. Info\n0. Logout\nInput: ");
                     input = scanInt.nextInt();
                     
                     switch (input) {
                         case 1:
-                            System.out.println("Pilih motor yang tersedia: ");
-                            int i = 0;
-                            for (Motor m: k.motorAktif()) {
-                                System.out.println(++i +" "+ m.getNama());
-                            }
-                            System.out.print("Input: ");
-                            input = scanInt.nextInt();
-                            user.sewaM(input, k);
-                            break;
                             
+                            if (!k.listMotor.isEmpty()) {
+                                System.out.println("\nPilih motor yang tersedia: ");
+                                int i = 0;
+                                for (Motor m: k.motorAktif()) {
+                                    System.out.println(++i +". "+ m.getNama());
+                                }
+
+                                System.out.print("Input: ");
+                                input = scanInt.nextInt();
+                                user.sewaM(--input, k);
+                            } else {
+                                System.out.println("\nTidak ada motor yang tersedia");
+                            }
+                            
+                            break;
                         case 2:
-                            d.currentUser.UserInfo();
+                            user.mengembalikanM(k);
+                            System.out.println("\nMotor berhasil dikembalikan");
+                            break;
+                        case 3:
+                            user.UserInfo();
                             break;
                         case 0:
                             d.logout();
@@ -65,7 +75,7 @@ public class DriverDashboard {
 
                 } else {
                     Mitra user = (Mitra)d.currentUser;
-                    System.out.print("\n1. Menyewa\n2. Info\n0. Logout\nInput: ");
+                    System.out.print("\n1. Menyewa\n2. Mencabut\n3. Info\n0. Logout\nInput: ");
                     input = scanInt.nextInt();
                     
                     switch (input) {
@@ -81,7 +91,12 @@ public class DriverDashboard {
                             break;
                             
                         case 2:
-                            d.currentUser.UserInfo();
+                            user.mencabutM(k);
+                            System.out.println("Motor berhasil dicabut dari katalog");
+                            break;                            
+                            
+                        case 3:
+                            user.UserInfo();
                             break;
                         case 0:
                             d.logout();
