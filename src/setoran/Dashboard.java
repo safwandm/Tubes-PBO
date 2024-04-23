@@ -13,11 +13,11 @@ import java.util.Scanner;
 public class Dashboard {
     Scanner scan = new Scanner(System.in);
 
-    private User currentUser;
-    private DatabaseUser databaseUser;
+    public User currentUser;
+    private DatabaseUser databaseUser = new DatabaseUser();
     
     public void login(){
-        System.out.println("silahkan login");
+        System.out.println("\nsilahkan login");
 
         System.out.print("Username: ");
         String username = scan.nextLine();
@@ -28,6 +28,7 @@ public class Dashboard {
 
         if (user == null){
             System.out.println("username atau password salah");
+            return;
         }
 
         currentUser = user;
@@ -57,8 +58,10 @@ public class Dashboard {
             switch (MorP) {
                 case "M":
                     user = new Mitra(username, password, age);
+                    break;
                 case "P":
                     user = new Pelanggan(username, password, age);
+                    break;
                 default:
                     System.out.println("\nInvalid input try again\n");
                     continue;
@@ -66,6 +69,7 @@ public class Dashboard {
             }
         }
         
+        databaseUser.registerUser(user);
         currentUser = user;
 
     }
