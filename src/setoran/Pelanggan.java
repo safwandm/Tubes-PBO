@@ -5,10 +5,6 @@
  */
 package setoran;
 
-/**
- *
- * @author daman1k
- */
 public class Pelanggan extends User {
     
     private Motor sewa;

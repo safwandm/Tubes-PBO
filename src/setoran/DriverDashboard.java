@@ -59,7 +59,6 @@ public class DriverDashboard {
                     
                     switch (input) {
                         case 1:
-
                             if (user.getSewa() != null) {
                                 System.out.println("\nAnda sudah menyewa sebuah motor");
                             } else if (k.getListMotor().isEmpty()) {

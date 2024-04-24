@@ -48,6 +48,7 @@ public class Mitra extends User {
             System.out.println("\nAnda sudah menyewakan: "+disewakan.getNama());
         }
     }   
+    
     public void mencabutM(KatalogM k) {
         if (disewakan != null) {
             if (disewakan.isTersedia()) {
