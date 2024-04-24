@@ -27,7 +27,7 @@ public class Dashboard {
         User user = databaseUser.authUser(username, password);
 
         if (user == null){
-            System.out.println("username atau password salah");
+            System.out.println("\nusername atau password salah");
             return;
         }
 

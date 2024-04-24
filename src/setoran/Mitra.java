@@ -49,12 +49,16 @@ public class Mitra extends User {
         }
     }   
     public void mencabutM(KatalogM k) {
-        if (disewakan.isTersedia()) {
-            k.removeMotor(disewakan);
-            disewakan = null;
-            System.out.println("\nMotor teah berhasil dicabut");
+        if (disewakan != null) {
+            if (disewakan.isTersedia()) {
+                k.removeMotor(disewakan);
+                disewakan = null;
+                System.out.println("\nMotor teah berhasil dicabut");
+            } else {
+                System.out.println("\nMotor sedang disewa pelanggan");
+            }
         } else {
-            System.out.println("\nMotor sedang disewa pelanggan");
+            System.out.println("\nAnda tidak sedang menyewakan motor");
         }
     } 
 }
