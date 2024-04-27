@@ -11,9 +11,9 @@ import java.util.ArrayList;
  * @author haidar
  */
 public class DatabaseUser {
-    private List<User> registeredUser = new ArrayList<User>();
+    private static List<User> registeredUser = new ArrayList<User>();
     
-    public boolean usernameExist(String username) {
+    public static boolean isUsernameExist(String username) {
         for (User user : registeredUser){
             if (user.getUsername().equals(username)){
                 return false;
@@ -22,11 +22,11 @@ public class DatabaseUser {
         return true;
     }
     
-    public void registerUser(User user){
+    public static void registerUser(User user){
         registeredUser.add(user);
     }
     
-    public User authUser(String username, String password){
+    public static User authUser(String username, String password){
         for (User user : registeredUser){
             if (user.getUsername().equals(username) && user.getPassword().equals(password)){
                 return user;

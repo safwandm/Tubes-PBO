@@ -15,7 +15,7 @@ public class Dashboard {
     Scanner scanStr = new Scanner(System.in);
 
     public User currentUser;
-    private DatabaseUser databaseUser = new DatabaseUser();
+    //private DatabaseUser databaseUser = new DatabaseUser();
     
     public void login(){
 
@@ -24,7 +24,7 @@ public class Dashboard {
         System.out.print("password: ");
         String password = scanStr.nextLine();
 
-        User user = databaseUser.authUser(username, password);
+        User user = DatabaseUser.authUser(username, password);
 
         if (user == null){
             System.out.println("\nusername atau password salah");
@@ -51,11 +51,11 @@ public class Dashboard {
         do {
             System.out.print("username: ");
             username = scanStr.nextLine();
-            if (!databaseUser.usernameExist(username)) {
+            if (!DatabaseUser.isUsernameExist(username)) {
                 System.out.println("\n - Username telah dipakai user lain - \n");
             }
         }
-        while (!databaseUser.usernameExist(username));
+        while (!DatabaseUser.isUsernameExist(username));
         
         do {
             System.out.print("age: ");
@@ -84,7 +84,7 @@ public class Dashboard {
             }
         }
                 
-        databaseUser.registerUser(user);
+        DatabaseUser.registerUser(user);
         currentUser = user;
 
     }
