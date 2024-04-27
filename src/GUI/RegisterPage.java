@@ -5,6 +5,7 @@
 package GUI;
 
 import javax.swing.JOptionPane;
+import setoran.DatabaseUser;
 import setoran.Mitra;
 import setoran.Pelanggan;
 import setoran.User;
@@ -173,7 +174,7 @@ public class RegisterPage extends javax.swing.JFrame {
                 password = fieldPassword.getText();
                 age = Integer.parseInt(fieldUmur.getText());
                 
-                if (!ModelUser.databaseUser.usernameExist(username)) {
+                if (!DatabaseUser.isUsernameExist(username)) {
                     JOptionPane.showMessageDialog(this, "Username telah dipakai user lain", "username", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -187,7 +188,7 @@ public class RegisterPage extends javax.swing.JFrame {
                 } else if (tipeUser.equals("pelanggan")) {
                     user = new Pelanggan(username, password, age);
                 }
-                ModelUser.databaseUser.registerUser(user);
+                DatabaseUser.registerUser(user);
                 
                 JOptionPane.showMessageDialog(this, "Akun " + tipeUser + " berhasil dibuat");
                 LoginPage login = new LoginPage();
