@@ -27,7 +27,7 @@ public class RegisterPage extends javax.swing.JFrame {
     
     public RegisterPage() {
         initComponents();
-        this.show(true);
+        this.setVisible(true);
     }
 
     /**
@@ -49,10 +49,11 @@ public class RegisterPage extends javax.swing.JFrame {
         fieldPassword = new javax.swing.JTextField();
         MitraRadio = new javax.swing.JRadioButton();
         PelangganRadio = new javax.swing.JRadioButton();
-        jLabel5 = new javax.swing.JLabel();
+        txtError = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        DaftarBtn = new javax.swing.JButton();
+        btnLogin = new javax.swing.JButton();
+        btnDaftar = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -91,20 +92,28 @@ public class RegisterPage extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("*Umur harus berupa integer");
-        jLabel5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        txtError.setForeground(new java.awt.Color(204, 0, 0));
+        txtError.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        txtError.setText(" ");
+        txtError.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jButton1.setText("Login");
-        jPanel1.add(jButton1);
-
-        DaftarBtn.setText("Daftar");
-        DaftarBtn.addActionListener(new java.awt.event.ActionListener() {
+        btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DaftarBtnActionPerformed(evt);
+                btnLoginActionPerformed(evt);
             }
         });
-        jPanel1.add(DaftarBtn);
+        jPanel1.add(btnLogin);
+
+        btnDaftar.setText("Daftar");
+        btnDaftar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDaftarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnDaftar);
+
+        jLabel6.setText("Tipe Akun");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,18 +126,19 @@ public class RegisterPage extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(fieldPassword, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fieldUmur, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fieldUsername, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(MitraRadio, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(PelangganRadio, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-                                .addGap(36, 36, 36)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(MitraRadio)
+                        .addGap(18, 18, 18)
+                        .addComponent(PelangganRadio)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                            .addComponent(fieldUmur)
+                            .addComponent(fieldUsername)
+                            .addComponent(fieldPassword)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -144,29 +154,32 @@ public class RegisterPage extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fieldUmur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addGap(2, 2, 2)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(MitraRadio)
                     .addComponent(PelangganRadio))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtError)
+                .addGap(8, 8, 8)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void fieldUmurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldUmurActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldUmurActionPerformed
 
-    private void DaftarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DaftarBtnActionPerformed
+    private void btnDaftarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDaftarActionPerformed
         // TODO add your handling code here:
         try {
             if (!fieldUsername.getText().isBlank() && !fieldPassword.getText().isBlank() && !fieldUmur.getText().isBlank() && tipeUser != null) {
@@ -179,7 +192,8 @@ public class RegisterPage extends javax.swing.JFrame {
                     return;
                 }
                 if (age < 18 || age > 90) {
-                    JOptionPane.showMessageDialog(this, "Umur tidak valid", "age", JOptionPane.ERROR_MESSAGE);
+                    //JOptionPane.showMessageDialog(this, "Umur tidak valid", "age", JOptionPane.ERROR_MESSAGE);
+                    txtError.setText("Umur tidak valid");
                     return;
                 }
 
@@ -194,19 +208,21 @@ public class RegisterPage extends javax.swing.JFrame {
                 LoginPage login = new LoginPage();
                 this.dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Semua field harus terisi");
+                //JOptionPane.showMessageDialog(this, "Semua field harus terisi");
+                txtError.setText("Semua field harus terisi");
             }
         } catch(Exception ex) {
             System.out.println(ex.toString());
             
             if (ex instanceof NumberFormatException) {
-                JOptionPane.showMessageDialog(this, "Umur harus dalam format angka");
+                txtError.setText("Umur harus dalam format angka");
+                //JOptionPane.showMessageDialog(this, "Umur harus dalam format angka");
             }
         }
         
         
         
-    }//GEN-LAST:event_DaftarBtnActionPerformed
+    }//GEN-LAST:event_btnDaftarActionPerformed
 
     private void MitraRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MitraRadioActionPerformed
         // TODO add your handling code here:
@@ -217,6 +233,13 @@ public class RegisterPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         tipeUser = "pelanggan";
     }//GEN-LAST:event_PelangganRadioActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        LoginPage lp = new LoginPage();
+        
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -254,19 +277,20 @@ public class RegisterPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton DaftarBtn;
     private javax.swing.JRadioButton MitraRadio;
     private javax.swing.JRadioButton PelangganRadio;
+    private javax.swing.JButton btnDaftar;
+    private javax.swing.JButton btnLogin;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField fieldPassword;
     private javax.swing.JTextField fieldUmur;
     private javax.swing.JTextField fieldUsername;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel txtError;
     // End of variables declaration//GEN-END:variables
 }

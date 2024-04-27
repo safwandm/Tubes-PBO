@@ -18,10 +18,9 @@ public class LoginPage extends javax.swing.JFrame {
      * Creates new form LoginPage
      */
     public User currentUser;
-    //protected static DatabaseUser databaseUser = new DatabaseUser();
     public LoginPage() {
         initComponents();
-        this.show(true);
+        this.setVisible(true);
     }
 
     /**
@@ -37,14 +36,13 @@ public class LoginPage extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         fieldUsername = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        fieldPassword = new javax.swing.JTextField();
         loginBtn = new javax.swing.JButton();
         registerBtn = new javax.swing.JButton();
+        fieldPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sewa Motor Harian");
         setName("loginFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(400, 250));
         setResizable(false);
         setSize(new java.awt.Dimension(400, 300));
 
@@ -61,7 +59,6 @@ public class LoginPage extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setLabelFor(fieldPassword);
         jLabel3.setText("Password");
 
         loginBtn.setText("Login");
@@ -94,8 +91,8 @@ public class LoginPage extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(fieldUsername)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fieldPassword)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fieldPassword))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -117,6 +114,9 @@ public class LoginPage extends javax.swing.JFrame {
                     .addComponent(registerBtn))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void fieldUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldUsernameActionPerformed
@@ -127,7 +127,7 @@ public class LoginPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
         RegisterPage rp = new RegisterPage();
-        rp.show(true);
+        //rp.show(true);
     }//GEN-LAST:event_registerBtnActionPerformed
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
@@ -178,7 +178,7 @@ public class LoginPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField fieldPassword;
+    private javax.swing.JPasswordField fieldPassword;
     private javax.swing.JTextField fieldUsername;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
