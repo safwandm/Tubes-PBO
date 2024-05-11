@@ -138,6 +138,7 @@ public class LoginPage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Username dan Password Salah", "", JOptionPane.ERROR_MESSAGE);
         } else {
             this.dispose();
+            HomePage hp = new HomePage();
         }
     }//GEN-LAST:event_loginBtnActionPerformed
 
@@ -152,11 +153,12 @@ public class LoginPage extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
+//            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {

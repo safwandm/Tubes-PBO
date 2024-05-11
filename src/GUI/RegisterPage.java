@@ -198,11 +198,13 @@ public class RegisterPage extends javax.swing.JFrame {
                 }
 
                 if (tipeUser.equals("mitra")){
-                    user = new Mitra(username, password, age);
+                    DatabaseUser.registerUser("Mitra", username, password, age);
+//                    user = new Mitra(username, password, age);
                 } else if (tipeUser.equals("pelanggan")) {
-                    user = new Pelanggan(username, password, age);
+                    DatabaseUser.registerUser("Pelanggan", username, password, age);
+//                    user = new Pelanggan(username, password, age);
                 }
-                DatabaseUser.registerUser(user);
+//                DatabaseUser.registerUser(user);
                 
                 JOptionPane.showMessageDialog(this, "Akun " + tipeUser + " berhasil dibuat");
                 LoginPage login = new LoginPage();
@@ -252,7 +254,7 @@ public class RegisterPage extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
