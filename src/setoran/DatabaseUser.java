@@ -39,13 +39,6 @@ public class DatabaseUser extends DefaultTableModel {
                 + age + "', '"
                 + tipeAkun + "')");
             st.executeUpdate(sql);
-//            ResultSet r = st.executeQuery(sql);
-            
-//            if (r.next()) {
-//                return new Pelanggan(username, password, 20);
-//            } else {
-//                return null;
-//            }
         } catch (Exception e) {
             System.out.println("RegisterError" + e.getMessage());
 //            return null;
