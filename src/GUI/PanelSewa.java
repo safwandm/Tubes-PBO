@@ -6,6 +6,7 @@ package GUI;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import setoran.Koneksi;
 /**
@@ -23,6 +24,7 @@ public class PanelSewa extends javax.swing.JPanel {
         initComponents();
         conn = Koneksi.getConnection();
         getData();
+        motorTable.removeColumn(motorTable.getColumnModel().getColumn(1));
     }
 
     /**
@@ -35,7 +37,7 @@ public class PanelSewa extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        motorTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         BrandDropdown = new javax.swing.JComboBox<>();
         transmisiLabel = new javax.swing.JLabel();
@@ -50,38 +52,49 @@ public class PanelSewa extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        motorTable.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        motorTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Brand", "Tipe", "Transmisi", "Tahun"
+                "No.", "Plat Nomor", "Brand", "Tipe", "Transmisi", "Tahun"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTable1.setRowHeight(30);
-        jTable1.getTableHeader().setResizingAllowed(false);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
+        motorTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        motorTable.setRowHeight(30);
+        motorTable.getTableHeader().setResizingAllowed(false);
+        motorTable.getTableHeader().setReorderingAllowed(false);
+        motorTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                motorTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(motorTable);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Brand");
@@ -116,25 +129,46 @@ public class PanelSewa extends javax.swing.JPanel {
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Detail Motor");
 
-        jLabel4.setText("Nomor Polisi");
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setText("Nomor Polisi :");
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Brand");
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Tipe");
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Transmisi");
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Tahun");
 
-        jLabel9.setText("jLabel9");
-
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("Silinder");
 
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel11.setText("Bahan Bakar");
 
         jButton1.setText("Sewa");
+        jButton1.setEnabled(false);
+
+        jLabel12.setText("jLabel12");
+
+        jLabel13.setText("jLabel13");
+
+        jLabel14.setText("jLabel14");
+
+        jLabel15.setText("jLabel15");
+
+        jLabel16.setText("jLabel16");
+
+        jLabel17.setText("jLabel17");
+
+        jLabel18.setText("jLabel18");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -164,19 +198,29 @@ public class PanelSewa extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11)))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel14)
+                                    .addComponent(jLabel15)
+                                    .addComponent(jLabel16)
+                                    .addComponent(jLabel17)
+                                    .addComponent(jLabel18)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jButton1)))
-                .addContainerGap(92, Short.MAX_VALUE))
+                        .addGap(49, 49, 49)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 49, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,24 +229,37 @@ public class PanelSewa extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9)
+                        .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
-                        .addComponent(jButton1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel18)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addGap(0, 9, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BrandDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -227,6 +284,20 @@ public class PanelSewa extends javax.swing.JPanel {
         getData();
     }//GEN-LAST:event_transmisiDropdownActionPerformed
 
+    private void motorTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_motorTableMouseClicked
+//        ListSelectionModel selectedModel = motorTable.getSelectionModel();
+//        if (!selectedModel.equals(null)) {
+//            String nomorPlat = selectedModel.get
+//        }
+        int selectedRowIdx = motorTable.getSelectedRow();
+        if (selectedRowIdx != -1) {
+            String nomorPlat = motorTable.getModel().getValueAt(selectedRowIdx, 1).toString();
+            System.out.println(nomorPlat);
+            
+            
+        }
+    }//GEN-LAST:event_motorTableMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> BrandDropdown;
@@ -235,6 +306,13 @@ public class PanelSewa extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -242,58 +320,60 @@ public class PanelSewa extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable motorTable;
     private javax.swing.JComboBox<String> transmisiDropdown;
     private javax.swing.JLabel transmisiLabel;
     // End of variables declaration//GEN-END:variables
 
     private void getData() {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) motorTable.getModel();
         model.setRowCount(0);
         
         try {
-            String script = "SELECT * FROM motor WHERE status_motor = 'Tersedia'";
+            String sql = "SELECT * FROM motor WHERE status_motor = 'Tersedia'";
             
             if (BrandDropdown.getSelectedIndex() != 0) {
-                script += "AND brand = '" + BrandDropdown.getSelectedItem().toString() + "'";
+                sql += "AND brand = '" + BrandDropdown.getSelectedItem().toString() + "'";
             }
             if (transmisiDropdown.getSelectedIndex() != 0) {
-                script += "AND transmisi = '" + transmisiDropdown.getSelectedItem().toString() + "'";
+                sql += "AND transmisi = '" + transmisiDropdown.getSelectedItem().toString() + "'";
             }
             
-            PreparedStatement st = conn.prepareStatement(script);
-            ResultSet rs = st.executeQuery(script);
-            
+//            PreparedStatement st = conn.prepareStatement(sql);
+//            ResultSet rs = st.executeQuery(sql);
+            ResultSet rs = Koneksi.query(sql);
+            int no = 1;
             while(rs.next()){
-                //String platNomor = rs.getString("plat_nomor");
+                String platNomor = rs.getString("plat_nomor");
                 String brand = rs.getString("brand");
                 String tipe = rs.getString("tipe");
                 String transmisi = rs.getString("transmisi");
                 String tahun = rs.getString("tahun");
                 
-                Object[] rowData = {brand, tipe, transmisi, tahun};
+                Object[] rowData = {no, platNomor,brand, tipe, transmisi, tahun};
                 model.addRow(rowData);
+                no++;
             }
             
             rs.close();
-            st.close();
+//            st.close();
         } catch (Exception e) {
             Logger.getLogger(Koneksi.class.getName()).log(Level.SEVERE, null, e);
         }
     }
     
     private void getData(String brand) {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) motorTable.getModel();
         model.setRowCount(0);
         
         try {
-            String script = "SELECT * FROM motor WHERE status_motor = 'Tersedia' and brand = '" + brand + "'";
-            PreparedStatement st = conn.prepareStatement(script);
-            ResultSet rs = st.executeQuery(script);
+            String sql = "SELECT * FROM motor WHERE status_motor = 'Tersedia' and brand = '" + brand + "'";
+//            PreparedStatement st = conn.prepareStatement(sql);
+//            ResultSet rs = st.executeQuery(sql);
+            ResultSet rs = Koneksi.query(sql);
             
             while(rs.next()){
                 String platNomor = rs.getString("plat_nomor");
@@ -306,9 +386,11 @@ public class PanelSewa extends javax.swing.JPanel {
             }
             
             rs.close();
-            st.close();
+//            st.close();
         } catch (Exception e) {
             Logger.getLogger(Koneksi.class.getName()).log(Level.SEVERE, null, e);
         }
     }
+    
+    
 }

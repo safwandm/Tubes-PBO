@@ -31,14 +31,15 @@ public class DatabaseUser extends DefaultTableModel {
     
     public static void registerUser(String tipeAkun, String username, String password, int age) {
         try {
-            cn = Koneksi.getConnection();
-            Statement st = cn.createStatement();
+//            cn = Koneksi.getConnection();
+//            Statement st = cn.createStatement();
             String sql = String.format("INSERT INTO user VALUES('"
                 + username + "', '"
                 + password + "', '"
                 + age + "', '"
                 + tipeAkun + "')");
-            st.executeUpdate(sql);
+//            st.executeUpdate(sql);
+            Koneksi.update(sql);
         } catch (Exception e) {
             System.out.println("RegisterError" + e.getMessage());
 //            return null;
@@ -54,12 +55,13 @@ public class DatabaseUser extends DefaultTableModel {
 //        return null;
 
         try {
-            cn = Koneksi.getConnection();
-            Statement st = cn.createStatement();
+//            cn = Koneksi.getConnection();
+//            Statement st = cn.createStatement();
             String sql = "SELECT * FROM user WHERE username = '" + username + "' and password = '" + password + "'";
-            ResultSet r = st.executeQuery(sql);
+//            ResultSet rs = st.executeQuery(sql);
+            ResultSet rs = Koneksi.query(sql);
             
-            if (r.next()) {
+            if (rs.next()) {
                 return new Pelanggan(username, password, 20);
             } else {
                 return null;

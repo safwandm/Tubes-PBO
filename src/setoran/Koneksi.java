@@ -12,17 +12,41 @@ import javax.swing.JOptionPane;
  * @author ASUS
  */
 public class Koneksi {
-    Connection koneksi;
+    static Connection koneksi = getConnection();
+    static Statement st;
+    static PreparedStatement pst;
+    static ResultSet rs;
     
     public static Connection getConnection() {
         try {
 //            Class.forName("com.mysql.jdbc.Driver");
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost/setoran", "root", "");
+            koneksi = DriverManager.getConnection("jdbc:mysql://localhost/setoran", "root", "");
             return koneksi;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
             return null;
+        }
+    }
+    
+    public static ResultSet query(String sql) {
+        try {
+            st = koneksi.prepareStatement(sql);
+            rs = st.executeQuery(sql);
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return rs;
+    }
+    
+    public static void disconnect() throws SQLException {
+        koneksi.close();
+    }
+    
+    public static void update(String sql) {
+        try {
+            
+        } catch (Exception e) {
         }
     }
 }
