@@ -14,11 +14,13 @@ import javax.swing.JOptionPane;
 public class Koneksi {
     Connection koneksi;
     
+    // Ganti sesuai dengan preferensi koneksi masing-masing
+    
     public static Connection getConnection() {
         try {
 //            Class.forName("com.mysql.jdbc.Driver");
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost/setoran", "root", "");
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/tubePBO?zeroDateTimeBehavior=CONVERT_TO_NULL", "root", "");
             return koneksi;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
