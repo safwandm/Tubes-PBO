@@ -9,13 +9,19 @@ package GUI;
  * @author ASUS
  */
 public class HomePage extends javax.swing.JFrame {
-    PanelSewa p;
+    PanelSewa pSewa;
+    PanelMotorSaya PMotorSaya;
+    PanelRiwayat pRiwayat;
     
     public HomePage() {
         initComponents();
         this.setVisible(true);
-        p = new PanelSewa();
-        jTabbedPane1.add(p);
+        pSewa = new PanelSewa();
+        pRiwayat = new PanelRiwayat();
+        PMotorSaya = new PanelMotorSaya();
+        jTabbedPane1.add(pSewa);
+        jTabbedPane1.add(pRiwayat);
+        jTabbedPane1.add(PMotorSaya);
     }
 
     /**
