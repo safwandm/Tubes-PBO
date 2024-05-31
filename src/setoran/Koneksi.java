@@ -15,11 +15,7 @@ public class Koneksi {
     static Connection koneksi = getConnection();
     static Statement st;
     static PreparedStatement pst;
-<<<<<<< Updated upstream
     static ResultSet rs;
-=======
-    public static ResultSet rs;
->>>>>>> Stashed changes
     
     public static Connection getConnection() {
         try {
@@ -27,33 +23,20 @@ public class Koneksi {
             Class.forName("com.mysql.cj.jdbc.Driver");
             koneksi = DriverManager.getConnection("jdbc:mysql://localhost/setoran", "root", "");
             return koneksi;
-<<<<<<< Updated upstream
         } catch (Exception e) {
-=======
-        } catch (ClassNotFoundException | SQLException e) {
->>>>>>> Stashed changes
             JOptionPane.showMessageDialog(null, e);
             return null;
         }
     }
     
-<<<<<<< Updated upstream
     public static ResultSet query(String sql) {
-=======
-    public static void query(String sql) {
->>>>>>> Stashed changes
         try {
             st = koneksi.prepareStatement(sql);
             rs = st.executeQuery(sql);
         } catch (SQLException e) {
-<<<<<<< Updated upstream
             System.err.println(e);
         }
         return rs;
-=======
-            System.out.println(e.getMessage());
-        }
->>>>>>> Stashed changes
     }
     
     public static void disconnect() throws SQLException {
