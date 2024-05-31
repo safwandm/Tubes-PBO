@@ -9,13 +9,28 @@ package GUI;
  * @author ASUS
  */
 public class HomePage extends javax.swing.JFrame {
+<<<<<<< Updated upstream
     PanelSewa p;
+=======
+    PanelSewa pSewa;
+    PanelMotorSaya PMotorSaya;
+    PanelRiwayat pRiwayat;
+>>>>>>> Stashed changes
     
     public HomePage() {
         initComponents();
         this.setVisible(true);
+<<<<<<< Updated upstream
         p = new PanelSewa();
         jTabbedPane1.add(p);
+=======
+        pSewa = new PanelSewa();
+        pRiwayat = new PanelRiwayat();
+        PMotorSaya = new PanelMotorSaya();
+        jTabbedPane1.add(pSewa);
+        jTabbedPane1.add(pRiwayat);
+        jTabbedPane1.add(PMotorSaya);
+>>>>>>> Stashed changes
     }
 
     /**
@@ -32,6 +47,10 @@ public class HomePage extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+<<<<<<< Updated upstream
+=======
+        jButton4 = new javax.swing.JButton();
+>>>>>>> Stashed changes
         jPanel4 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
 
@@ -60,7 +79,11 @@ public class HomePage extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(254, 255, 255));
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+<<<<<<< Updated upstream
         jButton2.setText("jButton2");
+=======
+        jButton2.setText("Riwayat");
+>>>>>>> Stashed changes
         jButton2.setBorder(null);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,7 +93,11 @@ public class HomePage extends javax.swing.JFrame {
 
         jButton3.setBackground(new java.awt.Color(254, 255, 255));
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+<<<<<<< Updated upstream
         jButton3.setText("jButton3");
+=======
+        jButton3.setText("Motor Saya");
+>>>>>>> Stashed changes
         jButton3.setBorder(null);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,6 +105,13 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
 
+<<<<<<< Updated upstream
+=======
+        jButton4.setForeground(new java.awt.Color(153, 0, 51));
+        jButton4.setText("Exit");
+        jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 51)));
+
+>>>>>>> Stashed changes
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -85,6 +119,13 @@ public class HomePage extends javax.swing.JFrame {
             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+<<<<<<< Updated upstream
+=======
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+>>>>>>> Stashed changes
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,7 +136,13 @@ public class HomePage extends javax.swing.JFrame {
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+<<<<<<< Updated upstream
                 .addContainerGap(301, Short.MAX_VALUE))
+=======
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 271, Short.MAX_VALUE)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+>>>>>>> Stashed changes
         );
 
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 570));
@@ -185,6 +232,10 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+<<<<<<< Updated upstream
+=======
+    private javax.swing.JButton jButton4;
+>>>>>>> Stashed changes
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;

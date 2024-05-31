@@ -4,16 +4,25 @@
  */
 package GUI;
 import java.sql.*;
+<<<<<<< Updated upstream
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import setoran.Koneksi;
+=======
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import setoran.*;
+>>>>>>> Stashed changes
 /**
  *
  * @author ASUS
  */
 public class PanelSewa extends javax.swing.JPanel {
+<<<<<<< Updated upstream
     
     private Connection conn;
     
@@ -25,6 +34,20 @@ public class PanelSewa extends javax.swing.JPanel {
         conn = Koneksi.getConnection();
         getData();
         motorTable.removeColumn(motorTable.getColumnModel().getColumn(1));
+=======
+    DefaultTableModel model;
+    ArrayList<Motor> listMotor = new ArrayList<>();;
+    Motor selectedMotor;
+    Koneksi kn;
+    
+    
+    public PanelSewa() {
+        initComponents();
+        Koneksi.getConnection();
+        model = (DefaultTableModel) motorTable.getModel();
+        getData();
+//        motorTable.removeColumn(motorTable.getColumnModel().getColumn(1));
+>>>>>>> Stashed changes
     }
 
     /**
@@ -40,7 +63,11 @@ public class PanelSewa extends javax.swing.JPanel {
         motorTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         BrandDropdown = new javax.swing.JComboBox<>();
+<<<<<<< Updated upstream
         transmisiLabel = new javax.swing.JLabel();
+=======
+        transmisiFilterLabel = new javax.swing.JLabel();
+>>>>>>> Stashed changes
         transmisiDropdown = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -54,6 +81,7 @@ public class PanelSewa extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+<<<<<<< Updated upstream
         jButton1 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -62,12 +90,23 @@ public class PanelSewa extends javax.swing.JPanel {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+=======
+        sewaBtn = new javax.swing.JButton();
+        nomorPolisiLabel = new javax.swing.JLabel();
+        brandLabel = new javax.swing.JLabel();
+        tipeLabel = new javax.swing.JLabel();
+        transmisiLabel = new javax.swing.JLabel();
+        tahunLabel = new javax.swing.JLabel();
+        silinderLabel = new javax.swing.JLabel();
+        hargaLabel = new javax.swing.JLabel();
+>>>>>>> Stashed changes
 
         setBackground(new java.awt.Color(255, 255, 255));
 
         motorTable.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         motorTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+<<<<<<< Updated upstream
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -79,6 +118,19 @@ public class PanelSewa extends javax.swing.JPanel {
         ) {
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
+=======
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "No.", "Brand", "Tipe", "Transmisi", "Tahun"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+>>>>>>> Stashed changes
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -107,8 +159,13 @@ public class PanelSewa extends javax.swing.JPanel {
             }
         });
 
+<<<<<<< Updated upstream
         transmisiLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         transmisiLabel.setText("Transmisi");
+=======
+        transmisiFilterLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        transmisiFilterLabel.setText("Transmisi");
+>>>>>>> Stashed changes
 
         transmisiDropdown.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         transmisiDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua", "Matic", "Semi Matic", "Manual" }));
@@ -125,6 +182,14 @@ public class PanelSewa extends javax.swing.JPanel {
 
         jButton2.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jButton2.setText("🔍");
+<<<<<<< Updated upstream
+=======
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+>>>>>>> Stashed changes
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -151,6 +216,7 @@ public class PanelSewa extends javax.swing.JPanel {
         jLabel10.setText("Silinder");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+<<<<<<< Updated upstream
         jLabel11.setText("Bahan Bakar");
 
         jButton1.setText("Sewa");
@@ -169,6 +235,26 @@ public class PanelSewa extends javax.swing.JPanel {
         jLabel17.setText("jLabel17");
 
         jLabel18.setText("jLabel18");
+=======
+        jLabel11.setText("Harga Perhari");
+
+        sewaBtn.setText("Sewa");
+        sewaBtn.setEnabled(false);
+
+        nomorPolisiLabel.setText("jLabel12");
+
+        brandLabel.setText("jLabel13");
+
+        tipeLabel.setText("jLabel14");
+
+        transmisiLabel.setText("jLabel15");
+
+        tahunLabel.setText("jLabel16");
+
+        silinderLabel.setText("jLabel17");
+
+        hargaLabel.setText("jLabel18");
+>>>>>>> Stashed changes
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -183,7 +269,11 @@ public class PanelSewa extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BrandDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
+<<<<<<< Updated upstream
                         .addComponent(transmisiLabel)
+=======
+                        .addComponent(transmisiFilterLabel)
+>>>>>>> Stashed changes
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(transmisiDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -208,6 +298,7 @@ public class PanelSewa extends javax.swing.JPanel {
                                     .addComponent(jLabel8)
                                     .addComponent(jLabel10)
                                     .addComponent(jLabel11)
+<<<<<<< Updated upstream
                                     .addComponent(jLabel13)
                                     .addComponent(jLabel14)
                                     .addComponent(jLabel15)
@@ -219,6 +310,19 @@ public class PanelSewa extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(49, 49, 49)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+=======
+                                    .addComponent(brandLabel)
+                                    .addComponent(tipeLabel)
+                                    .addComponent(transmisiLabel)
+                                    .addComponent(tahunLabel)
+                                    .addComponent(silinderLabel)
+                                    .addComponent(hargaLabel)
+                                    .addComponent(nomorPolisiLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(sewaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+>>>>>>> Stashed changes
                         .addGap(0, 49, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -232,6 +336,7 @@ public class PanelSewa extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+<<<<<<< Updated upstream
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
@@ -259,12 +364,45 @@ public class PanelSewa extends javax.swing.JPanel {
                         .addComponent(jLabel18)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1)
+=======
+                        .addComponent(nomorPolisiLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(brandLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tipeLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(transmisiLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tahunLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(silinderLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(hargaLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(sewaBtn)
+>>>>>>> Stashed changes
                         .addGap(0, 9, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BrandDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
+<<<<<<< Updated upstream
                             .addComponent(transmisiLabel)
+=======
+                            .addComponent(transmisiFilterLabel)
+>>>>>>> Stashed changes
                             .addComponent(transmisiDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -285,6 +423,7 @@ public class PanelSewa extends javax.swing.JPanel {
     }//GEN-LAST:event_transmisiDropdownActionPerformed
 
     private void motorTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_motorTableMouseClicked
+<<<<<<< Updated upstream
 //        ListSelectionModel selectedModel = motorTable.getSelectionModel();
 //        if (!selectedModel.equals(null)) {
 //            String nomorPlat = selectedModel.get
@@ -302,10 +441,38 @@ public class PanelSewa extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> BrandDropdown;
     private javax.swing.JButton jButton1;
+=======
+        selectedMotor = listMotor.get(motorTable.getSelectedRow());
+        if (selectedMotor != null) {
+            System.out.println(selectedMotor.getTipe());
+            nomorPolisiLabel.setText(selectedMotor.getPlatNomor());
+            brandLabel.setText(selectedMotor.getBrand());
+            tipeLabel.setText(selectedMotor.getTipe());
+            tahunLabel.setText(selectedMotor.getTahun());
+            silinderLabel.setText(Integer.toString(selectedMotor.getSilinder()));
+            hargaLabel.setText(Integer.toString(selectedMotor.getHargaHarian()));
+            
+            sewaBtn.setEnabled(true);
+        } else {
+            sewaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_motorTableMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        clearTable();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> BrandDropdown;
+    private javax.swing.JLabel brandLabel;
+    private javax.swing.JLabel hargaLabel;
+>>>>>>> Stashed changes
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+<<<<<<< Updated upstream
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -313,6 +480,8 @@ public class PanelSewa extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+=======
+>>>>>>> Stashed changes
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -324,13 +493,27 @@ public class PanelSewa extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTable motorTable;
+<<<<<<< Updated upstream
     private javax.swing.JComboBox<String> transmisiDropdown;
+=======
+    private javax.swing.JLabel nomorPolisiLabel;
+    private javax.swing.JButton sewaBtn;
+    private javax.swing.JLabel silinderLabel;
+    private javax.swing.JLabel tahunLabel;
+    private javax.swing.JLabel tipeLabel;
+    private javax.swing.JComboBox<String> transmisiDropdown;
+    private javax.swing.JLabel transmisiFilterLabel;
+>>>>>>> Stashed changes
     private javax.swing.JLabel transmisiLabel;
     // End of variables declaration//GEN-END:variables
 
     private void getData() {
+<<<<<<< Updated upstream
         DefaultTableModel model = (DefaultTableModel) motorTable.getModel();
         model.setRowCount(0);
+=======
+        clearTable();
+>>>>>>> Stashed changes
         
         try {
             String sql = "SELECT * FROM motor WHERE status_motor = 'Tersedia'";
@@ -341,6 +524,7 @@ public class PanelSewa extends javax.swing.JPanel {
             if (transmisiDropdown.getSelectedIndex() != 0) {
                 sql += "AND transmisi = '" + transmisiDropdown.getSelectedItem().toString() + "'";
             }
+<<<<<<< Updated upstream
             
 //            PreparedStatement st = conn.prepareStatement(sql);
 //            ResultSet rs = st.executeQuery(sql);
@@ -361,18 +545,45 @@ public class PanelSewa extends javax.swing.JPanel {
             rs.close();
 //            st.close();
         } catch (Exception e) {
+=======
+            Koneksi.query(sql);
+            while(Koneksi.rs.next()){
+                int idMotor = Koneksi.rs.getInt("id_motor");
+                String platNomor = Koneksi.rs.getString("plat_nomor");
+                String brand = Koneksi.rs.getString("brand");
+                String tipe = Koneksi.rs.getString("tipe");
+                String tahun = Koneksi.rs.getString("tahun");
+                String transmisi = Koneksi.rs.getString("transmisi");
+                String statusMotor = Koneksi.rs.getString("status_motor");
+                int silinder = Koneksi.rs.getInt("silinder");
+                int hargaHarian = Koneksi.rs.getInt("harga_harian");
+                
+                listMotor.add(new Motor(idMotor, platNomor, brand, tipe, tahun, transmisi, statusMotor, silinder, hargaHarian));
+            }
+            
+            for (int i = 0; i < listMotor.size(); i++) {
+                Object[] rowData = {i + 1, listMotor.get(i).getBrand(), listMotor.get(i).getTipe(), listMotor.get(i).getTransmisi(), listMotor.get(i).getTahun()};
+                model.addRow(rowData);
+            }
+        } catch (SQLException e) {
+>>>>>>> Stashed changes
             Logger.getLogger(Koneksi.class.getName()).log(Level.SEVERE, null, e);
         }
     }
     
     private void getData(String brand) {
+<<<<<<< Updated upstream
         DefaultTableModel model = (DefaultTableModel) motorTable.getModel();
         model.setRowCount(0);
+=======
+        clearTable();
+>>>>>>> Stashed changes
         
         try {
             String sql = "SELECT * FROM motor WHERE status_motor = 'Tersedia' and brand = '" + brand + "'";
 //            PreparedStatement st = conn.prepareStatement(sql);
 //            ResultSet rs = st.executeQuery(sql);
+<<<<<<< Updated upstream
             ResultSet rs = Koneksi.query(sql);
             
             while(rs.next()){
@@ -380,17 +591,38 @@ public class PanelSewa extends javax.swing.JPanel {
                 String brands = rs.getString("brand");
                 String tipe = rs.getString("tipe");
                 String tahun = rs.getString("tahun");
+=======
+//            ResultSet rs = Koneksi.query(sql);
+            Koneksi.query(sql);
+            while(Koneksi.rs.next()){
+                String platNomor = Koneksi.rs.getString("plat_nomor");
+                String brands = Koneksi.rs.getString("brand");
+                String tipe = Koneksi.rs.getString("tipe");
+                String tahun = Koneksi.rs.getString("tahun");
+>>>>>>> Stashed changes
                 
                 Object[] rowData = {platNomor, brands, tipe, tahun};
                 model.addRow(rowData);
             }
+<<<<<<< Updated upstream
             
             rs.close();
 //            st.close();
         } catch (Exception e) {
+=======
+//            st.close();
+        } catch (SQLException e) {
+>>>>>>> Stashed changes
             Logger.getLogger(Koneksi.class.getName()).log(Level.SEVERE, null, e);
         }
     }
     
+<<<<<<< Updated upstream
     
+=======
+    private void clearTable() {
+        model.setRowCount(0);
+        listMotor.clear();
+    }
+>>>>>>> Stashed changes
 }
