@@ -15,28 +15,26 @@ public class Koneksi {
     static Connection koneksi = getConnection();
     static Statement st;
     static PreparedStatement pst;
-    static ResultSet rs;
+    public static ResultSet rs;
     
     public static Connection getConnection() {
         try {
-//            Class.forName("com.mysql.jdbc.Driver");
             Class.forName("com.mysql.cj.jdbc.Driver");
             koneksi = DriverManager.getConnection("jdbc:mysql://localhost/setoran", "root", "");
             return koneksi;
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
             return null;
         }
     }
     
-    public static ResultSet query(String sql) {
+    public static void query(String sql) {
         try {
             st = koneksi.prepareStatement(sql);
             rs = st.executeQuery(sql);
         } catch (SQLException e) {
-            System.err.println(e);
+            System.out.println(e.getMessage());
         }
-        return rs;
     }
     
     public static void disconnect() throws SQLException {
