@@ -22,6 +22,7 @@ public class HomePage extends javax.swing.JFrame {
         jTabbedPane1.add(pSewa);
         jTabbedPane1.add(pRiwayat);
         jTabbedPane1.add(PMotorSaya);
+        
     }
 
     /**
@@ -66,7 +67,7 @@ public class HomePage extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(254, 255, 255));
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton2.setText("jButton2");
+        jButton2.setText("Riwayat");
         jButton2.setBorder(null);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,7 +77,7 @@ public class HomePage extends javax.swing.JFrame {
 
         jButton3.setBackground(new java.awt.Color(254, 255, 255));
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton3.setText("jButton3");
+        jButton3.setText("Motor Saya");
         jButton3.setBorder(null);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
