@@ -40,53 +40,53 @@ public class Dashboard {
         currentUser = null;
     }
 
-    public void register(){
-
-        User user = null;
-        
-        String username, password;
-        int age = 0;
-                
-        
-        do {
-            System.out.print("username: ");
-            username = scanStr.nextLine();
-            if (!DatabaseUser.isUsernameExist(username)) {
-                System.out.println("\n - Username telah dipakai user lain - \n");
-            }
-        }
-        while (!DatabaseUser.isUsernameExist(username));
-        
-        do {
-            System.out.print("age: ");
-            age = scanInt.nextInt();
-            if (age < 18 || age > 90) {
-                System.out.println("\n - Input umur tidak valid, Coba lagi - \n");
-            }        }
-        while (age < 18 || age > 90); 
-        
-        System.out.print("password: ");
-        password = scanStr.nextLine();
-
-        while (user == null) {
-        System.out.print("Mitra(M) or Pelanggan(P): ");
-        String MorP = scanStr.nextLine();
-            switch (MorP) {
-                case "M":
-                    user = new Mitra(username, password, age);
-                    break;
-                case "P":
-                    user = new Pelanggan(username, password, age);
-                    break;
-                default:
-                    System.out.println("\n - Input tidak valid, Coba lagi - \n");
-                    continue;
-            }
-        }
-                
-        DatabaseUser.registerUser(user);
-        currentUser = user;
-
-    }
+//    public void register(){
+//
+//        User user = null;
+//        
+//        String username, password;
+//        int age = 0;
+//                
+//        
+//        do {
+//            System.out.print("username: ");
+//            username = scanStr.nextLine();
+//            if (!DatabaseUser.isUsernameExist(username)) {
+//                System.out.println("\n - Username telah dipakai user lain - \n");
+//            }
+//        }
+//        while (!DatabaseUser.isUsernameExist(username));
+//        
+//        do {
+//            System.out.print("age: ");
+//            age = scanInt.nextInt();
+//            if (age < 18 || age > 90) {
+//                System.out.println("\n - Input umur tidak valid, Coba lagi - \n");
+//            }        }
+//        while (age < 18 || age > 90); 
+//        
+//        System.out.print("password: ");
+//        password = scanStr.nextLine();
+//
+//        while (user == null) {
+//        System.out.print("Mitra(M) or Pelanggan(P): ");
+//        String MorP = scanStr.nextLine();
+//            switch (MorP) {
+//                case "M":
+//                    user = new Mitra(username, password, age);
+//                    break;
+//                case "P":
+//                    user = new Pelanggan(username, password, age);
+//                    break;
+//                default:
+//                    System.out.println("\n - Input tidak valid, Coba lagi - \n");
+//                    continue;
+//            }
+//        }
+//                
+//        DatabaseUser.registerUser(user);
+//        currentUser = user;
+//
+//    }
     
 }

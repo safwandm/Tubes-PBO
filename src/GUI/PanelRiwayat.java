@@ -4,17 +4,29 @@
  */
 package GUI;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import setoran.DatabaseUser;
+import setoran.Koneksi;
+import setoran.Motor;
+
 /**
  *
  * @author YOGA
  */
 public class PanelRiwayat extends javax.swing.JPanel {
+    ArrayList<Motor> listMotor = new ArrayList<>();
+    DefaultTableModel model;
 
-    /**
-     * Creates new form PanelRiwayat
-     */
     public PanelRiwayat() {
         initComponents();
+        model = (DefaultTableModel) jTable1.getModel();
+        getData();
     }
 
     /**
@@ -26,19 +38,76 @@ public class PanelRiwayat extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(750, 423));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "No", "Tanggal Mulai", "Tanggal Selesai", "Motor", "Nominal"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(47, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    private void getData() {
+        clearTable();
+        
+        String sql = "SELECT * FROM vu_transaksi_nama_motor WHERE id_user = " + DatabaseUser.currentUser.getIdUser();
+        
+        Koneksi.query(sql);
+        int no = 1;
+        try {
+            while (Koneksi.rs.next()) {
+                int idTransaksi = Koneksi.rs.getInt("id_transaksi");
+                Date tanggalMulai = Koneksi.rs.getDate("tanggal_mulai");
+                Date tanggalSelesai = Koneksi.rs.getDate("tanggal_selesai");
+                String namaMotor = Koneksi.rs.getString("nama_motor");
+                int nominal = Koneksi.rs.getInt("nominal");
+                
+                Object[] rowData = {no, tanggalMulai, tanggalSelesai, namaMotor,nominal};
+                model.addRow(rowData);
+                
+            }
+        } catch (SQLException ex) {
+            System.out.println("eror");
+            Logger.getLogger(PanelRiwayat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void clearTable() {
+        model.setRowCount(0);
+        listMotor.clear();
+    }
 }
