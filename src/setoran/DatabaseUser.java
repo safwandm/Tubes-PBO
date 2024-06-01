@@ -4,7 +4,6 @@
  */
 package setoran;
 
-import java.util.List;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
@@ -13,8 +12,9 @@ import java.sql.*;
  * @author haidar
  */
 public class DatabaseUser extends DefaultTableModel {
-    private static List<User> registeredUser = new ArrayList<User>();
-    private static Connection cn;
+    private static ArrayList<User> registeredUser = new ArrayList<>();
+    public static User currentUser;
+//    private static Connection cn;
     
     public static boolean isUsernameExist(String username) {
         for (User user : registeredUser){
@@ -31,8 +31,6 @@ public class DatabaseUser extends DefaultTableModel {
     
     public static void registerUser(String tipeAkun, String username, String password, int age) {
         try {
-//            cn = Koneksi.getConnection();
-//            Statement st = cn.createStatement();
             String sql = String.format("INSERT INTO user VALUES('"
                 + username + "', '"
                 + password + "', '"
@@ -47,26 +45,24 @@ public class DatabaseUser extends DefaultTableModel {
     }
     
     public static User authUser(String username, String password){
-//        for (User user : registeredUser){
-//            if (user.getUsername().equals(username) && user.getPassword().equals(password)){
-//                return user;
-//            }
-//        }
-//        return null;
-
         try {
-//            cn = Koneksi.getConnection();
-//            Statement st = cn.createStatement();
             String sql = "SELECT * FROM user WHERE username = '" + username + "' and password = '" + password + "'";
-//            ResultSet rs = st.executeQuery(sql);
-            ResultSet rs = Koneksi.query(sql);
-            
-            if (rs.next()) {
-                return new Pelanggan(username, password, 20);
+            Koneksi.query(sql);
+            if (Koneksi.rs.next()) {
+                int idUser = Koneksi.rs.getInt("id_user");
+                int umur = Koneksi.rs.getInt("umur");
+                String tipeAkun = Koneksi.rs.getString("tipe_akun");
+                if (tipeAkun.equals("Pelanggan")) {
+                    currentUser = new Pelanggan(idUser, username, password, umur);
+                } else if (tipeAkun.equals("Mitra")) {
+                    currentUser = new Mitra(idUser, username, password, umur);
+                }
+                
+                return currentUser;
             } else {
                 return null;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("AuthError");
             return null;
         }
