@@ -4,8 +4,6 @@
  */
 package setoran;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 /**
  *
@@ -41,10 +39,13 @@ public class Koneksi {
         koneksi.close();
     }
     
-    public static void update(String sql) {
+    public static void update(String sql) throws SQLException {
         try {
-            
-        } catch (Exception e) {
+            st = koneksi.prepareStatement(sql);
+            st.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+            System.out.println(e.getMessage());
         }
     }
 }

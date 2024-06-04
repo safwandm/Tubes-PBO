@@ -4,15 +4,25 @@
  */
 package GUI;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import setoran.DatabaseUser;
+import setoran.Koneksi;
+
 /**
  *
  * @author YOGA
  */
 public class DialogTambahMotor extends javax.swing.JDialog {
+    String inputPlatNomor;
+    String inputBrand;
+    String inputTipe;
+    int inputTahun;
+    String inputTransmisi;
+    int inputSilinder;
 
-    /**
-     * Creates new form DialogTambahMotor
-     */
     public DialogTambahMotor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -29,30 +39,124 @@ public class DialogTambahMotor extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        platNomorField = new javax.swing.JTextField();
+        brandField = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        tipeField = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        tahunSpinner = new javax.swing.JSpinner();
+        jLabel6 = new javax.swing.JLabel();
+        transmisiBox = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        silinderSpinner = new javax.swing.JSpinner();
+        simpanBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(400, 350));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Tambah Motor");
+
+        jLabel2.setText("Plat Nomor");
+
+        jLabel3.setText("Brand");
+
+        jLabel4.setText("Tipe");
+
+        jLabel5.setText("Tahun");
+
+        jLabel6.setText("Transmisi");
+
+        transmisiBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Manual", "Matic" }));
+        transmisiBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transmisiBoxActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Silinder");
+
+        simpanBtn.setText("Simpan");
+        simpanBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simpanBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(platNomorField))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(brandField))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tipeField)
+                            .addComponent(tahunSpinner)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(transmisiBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(silinderSpinner))))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(154, 154, 154)
+                .addComponent(simpanBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(278, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(platNomorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(brandField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(tipeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(tahunSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(transmisiBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(silinderSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(simpanBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -67,7 +171,30 @@ public class DialogTambahMotor extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void simpanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanBtnActionPerformed
+        inputPlatNomor = platNomorField.getText();
+        inputBrand = brandField.getText();
+        inputTipe = tipeField.getText();
+        inputTahun = (int) tahunSpinner.getValue();
+        inputSilinder = (int) silinderSpinner.getValue();
+        int hargaHarian = hitungHarga(inputSilinder, inputTransmisi);
+        
+        try {
+            String sql = "INSERT INTO `motor` (`id_motor`, `plat_nomor`, `brand`, `tipe`, `tahun`, `transmisi`, `status_motor`, `silinder`, `harga_harian`, `id_pemilik`) VALUES (NULL, '" + inputPlatNomor + "', '" + inputBrand + "', '"+ inputTipe +"', " + inputTahun + ", '" + inputTransmisi + "', 'Tersedia', " + inputSilinder + ", " + hargaHarian + ", " + DatabaseUser.currentUser.getIdUser() + ")";
+            Koneksi.update(sql);
+            JOptionPane.showMessageDialog(this, "Berhasil Menambahkan Motor");
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(DialogTambahMotor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_simpanBtnActionPerformed
+
+    private void transmisiBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transmisiBoxActionPerformed
+        inputTransmisi = transmisiBox.getSelectedItem().toString();
+    }//GEN-LAST:event_transmisiBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -112,7 +239,36 @@ public class DialogTambahMotor extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField brandField;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField platNomorField;
+    private javax.swing.JSpinner silinderSpinner;
+    private javax.swing.JButton simpanBtn;
+    private javax.swing.JSpinner tahunSpinner;
+    private javax.swing.JTextField tipeField;
+    private javax.swing.JComboBox<String> transmisiBox;
     // End of variables declaration//GEN-END:variables
+    private int hitungHarga(int silinder, String transmisi) {
+        if (transmisi.equals("Matic")) {
+            if (silinder < 150) {
+                return 45000;
+            } else if (silinder >= 150) {
+                return 55000;
+            }
+        } else {
+            if (silinder < 150) {
+                return 40000;
+            } else if (silinder >= 150) {
+                return 60000;
+            }
+        }
+        return 0;
+    }
 }
