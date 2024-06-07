@@ -131,8 +131,6 @@ public class LoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_registerBtnActionPerformed
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        // TODO add your handling code here:
-        //System.out.println(fieldUsername.getText() + fieldPassword.getText());
         User user = DatabaseUser.authUser(fieldUsername.getText(), fieldPassword.getText());
         if (user == null){
             JOptionPane.showMessageDialog(this, "Username dan Password Salah", "", JOptionPane.ERROR_MESSAGE);

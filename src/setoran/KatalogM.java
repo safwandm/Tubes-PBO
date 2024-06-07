@@ -31,25 +31,25 @@ public class KatalogM {
     }
     
     
-    public ArrayList<Motor> motorAktif() {
-
-        ArrayList<Motor> aktif = new ArrayList<Motor>();
-        for (Motor m : listMotor) {
-            if (m.isTersedia()) {
-                aktif.add(m);
-            }
-        }
-        return aktif;
-
-    }
-    public ArrayList<Motor> motorNonAktif() {
-
-        ArrayList<Motor> nonAktif = new ArrayList<Motor>();
-        for (Motor m : listMotor) {
-            if (!m.isTersedia()) {
-                nonAktif.add(m);
-            }
-        }
-        return nonAktif;
-    }
+//    public ArrayList<Motor> motorAktif() {
+//
+//        ArrayList<Motor> aktif = new ArrayList<Motor>();
+//        for (Motor m : listMotor) {
+//            if (m.isTersedia()) {
+//                aktif.add(m);
+//            }
+//        }
+//        return aktif;
+//
+//    }
+//    public ArrayList<Motor> motorNonAktif() {
+//
+//        ArrayList<Motor> nonAktif = new ArrayList<Motor>();
+//        for (Motor m : listMotor) {
+//            if (!m.isTersedia()) {
+//                nonAktif.add(m);
+//            }
+//        }
+//        return nonAktif;
+//    }
 }

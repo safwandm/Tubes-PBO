@@ -4,25 +4,29 @@
  */
 package GUI;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import setoran.Koneksi;
+import setoran.*;
 /**
  *
  * @author ASUS
  */
 public class PanelSewa extends javax.swing.JPanel {
     
-    private Connection conn;
+    DefaultTableModel model;
+    ArrayList<Motor> listMotor = new ArrayList<>();;
+    Motor selectedMotor;
+    Koneksi kn;
     
-    /**
-     * Creates new form NewJPanel
-     */
     public PanelSewa() {
         initComponents();
-        conn = Koneksi.getConnection();
+        Koneksi.getConnection();
+        model = (DefaultTableModel) motorTable.getModel();
+        motorTable.getColumnModel().getColumn(0).setPreferredWidth(25);
         getData();
+//        motorTable.removeColumn(motorTable.getColumnModel().getColumn(1));
     }
 
     /**
@@ -35,10 +39,10 @@ public class PanelSewa extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        motorTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         BrandDropdown = new javax.swing.JComboBox<>();
-        transmisiLabel = new javax.swing.JLabel();
+        transmisiFilterLabel = new javax.swing.JLabel();
         transmisiDropdown = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -50,38 +54,49 @@ public class PanelSewa extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        sewaBtn = new javax.swing.JButton();
+        nomorPolisiLabel = new javax.swing.JLabel();
+        brandLabel = new javax.swing.JLabel();
+        tipeLabel = new javax.swing.JLabel();
+        transmisiLabel = new javax.swing.JLabel();
+        tahunLabel = new javax.swing.JLabel();
+        silinderLabel = new javax.swing.JLabel();
+        hargaLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        motorTable.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        motorTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Brand", "Tipe", "Transmisi", "Tahun"
+                "No.", "Plat Nomor", "Brand", "Tipe", "Transmisi", "Tahun"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTable1.setRowHeight(30);
-        jTable1.getTableHeader().setResizingAllowed(false);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
+        motorTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        motorTable.setRowHeight(30);
+        motorTable.getTableHeader().setResizingAllowed(false);
+        motorTable.getTableHeader().setReorderingAllowed(false);
+        motorTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                motorTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(motorTable);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Brand");
@@ -94,8 +109,8 @@ public class PanelSewa extends javax.swing.JPanel {
             }
         });
 
-        transmisiLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        transmisiLabel.setText("Transmisi");
+        transmisiFilterLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        transmisiFilterLabel.setText("Transmisi");
 
         transmisiDropdown.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         transmisiDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua", "Matic", "Semi Matic", "Manual" }));
@@ -116,25 +131,46 @@ public class PanelSewa extends javax.swing.JPanel {
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Detail Motor");
 
-        jLabel4.setText("Nomor Polisi");
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setText("Nomor Polisi :");
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Brand");
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Tipe");
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Transmisi");
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Tahun");
 
-        jLabel9.setText("jLabel9");
-
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("Silinder");
 
-        jLabel11.setText("Bahan Bakar");
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel11.setText("Harga");
 
-        jButton1.setText("Sewa");
+        sewaBtn.setText("Sewa");
+        sewaBtn.setEnabled(false);
+
+        nomorPolisiLabel.setText("jLabel12");
+
+        brandLabel.setText("jLabel13");
+
+        tipeLabel.setText("jLabel14");
+
+        transmisiLabel.setText("jLabel15");
+
+        tahunLabel.setText("jLabel16");
+
+        silinderLabel.setText("jLabel17");
+
+        hargaLabel.setText("jLabel18");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -149,7 +185,7 @@ public class PanelSewa extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BrandDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
-                        .addComponent(transmisiLabel)
+                        .addComponent(transmisiFilterLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(transmisiDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -164,19 +200,43 @@ public class PanelSewa extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11)))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel11))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jButton1)))
-                .addContainerGap(92, Short.MAX_VALUE))
+                        .addGap(49, 49, 49)
+                        .addComponent(sewaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 49, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nomorPolisiLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(brandLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tipeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(transmisiLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tahunLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(silinderLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(hargaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,29 +245,42 @@ public class PanelSewa extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nomorPolisiLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(brandLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tipeLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(transmisiLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9)
+                        .addComponent(tahunLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(silinderLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
-                        .addComponent(jButton1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(hargaLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(sewaBtn)
+                        .addGap(0, 9, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BrandDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
-                            .addComponent(transmisiLabel)
+                            .addComponent(transmisiFilterLabel)
                             .addComponent(transmisiDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -227,10 +300,41 @@ public class PanelSewa extends javax.swing.JPanel {
         getData();
     }//GEN-LAST:event_transmisiDropdownActionPerformed
 
+    private void motorTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_motorTableMouseClicked
+//        ListSelectionModel selectedModel = motorTable.getSelectionModel();
+//        if (!selectedModel.equals(null)) {
+//            String nomorPlat = selectedModel.get
+//        }
+//        int selectedRowIdx = motorTable.getSelectedRow();
+//        if (selectedRowIdx != -1) {
+//            String nomorPlat = motorTable.getModel().getValueAt(selectedRowIdx, 1).toString();
+//            System.out.println(nomorPlat);
+//            
+//            
+//        }
+
+        selectedMotor = listMotor.get(motorTable.getSelectedRow());
+        if (selectedMotor != null) {
+            System.out.println(selectedMotor.getTipe());
+            nomorPolisiLabel.setText(selectedMotor.getPlatNomor());
+            brandLabel.setText(selectedMotor.getBrand());
+            tipeLabel.setText(selectedMotor.getTipe());
+            tahunLabel.setText(selectedMotor.getTahun());
+            transmisiLabel.setText(selectedMotor.getTransmisi());
+            silinderLabel.setText(Integer.toString(selectedMotor.getSilinder()));
+            hargaLabel.setText(Integer.toString(selectedMotor.getHargaHarian()));
+            
+            sewaBtn.setEnabled(true);
+        } else {
+            sewaBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_motorTableMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> BrandDropdown;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel brandLabel;
+    private javax.swing.JLabel hargaLabel;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -242,73 +346,85 @@ public class PanelSewa extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable motorTable;
+    private javax.swing.JLabel nomorPolisiLabel;
+    private javax.swing.JButton sewaBtn;
+    private javax.swing.JLabel silinderLabel;
+    private javax.swing.JLabel tahunLabel;
+    private javax.swing.JLabel tipeLabel;
     private javax.swing.JComboBox<String> transmisiDropdown;
+    private javax.swing.JLabel transmisiFilterLabel;
     private javax.swing.JLabel transmisiLabel;
     // End of variables declaration//GEN-END:variables
 
     private void getData() {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
+        clearTable();
         
         try {
-            String script = "SELECT * FROM motor WHERE status_motor = 'Tersedia'";
+            String sql = "SELECT * FROM motor WHERE status_motor = 'Tersedia'";
             
             if (BrandDropdown.getSelectedIndex() != 0) {
-                script += "AND brand = '" + BrandDropdown.getSelectedItem().toString() + "'";
+                sql += "AND brand = '" + BrandDropdown.getSelectedItem().toString() + "'";
             }
             if (transmisiDropdown.getSelectedIndex() != 0) {
-                script += "AND transmisi = '" + transmisiDropdown.getSelectedItem().toString() + "'";
+                sql += "AND transmisi = '" + transmisiDropdown.getSelectedItem().toString() + "'";
+            }
+            Koneksi.query(sql);
+            while(Koneksi.rs.next()){
+                int idMotor = Koneksi.rs.getInt("id_motor");
+                String platNomor = Koneksi.rs.getString("plat_nomor");
+                String brand = Koneksi.rs.getString("brand");
+                String tipe = Koneksi.rs.getString("tipe");
+                String tahun = Koneksi.rs.getString("tahun");
+                String transmisi = Koneksi.rs.getString("transmisi");
+                String statusMotor = Koneksi.rs.getString("status_motor");
+                int silinder = Koneksi.rs.getInt("silinder");
+                int hargaHarian = Koneksi.rs.getInt("harga_harian");
+                
+                listMotor.add(new Motor(idMotor, platNomor, brand, tipe, tahun, transmisi, statusMotor, silinder, hargaHarian));
             }
             
-            PreparedStatement st = conn.prepareStatement(script);
-            ResultSet rs = st.executeQuery(script);
-            
-            while(rs.next()){
-                //String platNomor = rs.getString("plat_nomor");
-                String brand = rs.getString("brand");
-                String tipe = rs.getString("tipe");
-                String transmisi = rs.getString("transmisi");
-                String tahun = rs.getString("tahun");
-                
-                Object[] rowData = {brand, tipe, transmisi, tahun};
+            for (int i = 0; i < listMotor.size(); i++) {
+                Object[] rowData = {i + 1, listMotor.get(i).getPlatNomor(),listMotor.get(i).getBrand(), listMotor.get(i).getTipe(), listMotor.get(i).getTransmisi(), listMotor.get(i).getTahun()};
                 model.addRow(rowData);
             }
-            
-            rs.close();
-            st.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Logger.getLogger(Koneksi.class.getName()).log(Level.SEVERE, null, e);
         }
     }
     
-    private void getData(String brand) {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+//    private void getData(String brand) {
+//        DefaultTableModel model = (DefaultTableModel) motorTable.getModel();
+//        model.setRowCount(0);
+//        
+//        try {
+//            String sql = "SELECT * FROM motor WHERE status_motor = 'Tersedia' and brand = '" + brand + "'";
+////            PreparedStatement st = conn.prepareStatement(sql);
+////            ResultSet rs = st.executeQuery(sql);
+//            ResultSet rs = Koneksi.query(sql);
+//            
+//            while(rs.next()){
+//                String platNomor = rs.getString("plat_nomor");
+//                String brands = rs.getString("brand");
+//                String tipe = rs.getString("tipe");
+//                String tahun = rs.getString("tahun");
+//                
+//                Object[] rowData = {platNomor, brands, tipe, tahun};
+//                model.addRow(rowData);
+//            }
+//            
+//            rs.close();
+////            st.close();
+//        } catch (Exception e) {
+//            Logger.getLogger(Koneksi.class.getName()).log(Level.SEVERE, null, e);
+//        }
+//    }
+    
+    private void clearTable() {
         model.setRowCount(0);
-        
-        try {
-            String script = "SELECT * FROM motor WHERE status_motor = 'Tersedia' and brand = '" + brand + "'";
-            PreparedStatement st = conn.prepareStatement(script);
-            ResultSet rs = st.executeQuery(script);
-            
-            while(rs.next()){
-                String platNomor = rs.getString("plat_nomor");
-                String brands = rs.getString("brand");
-                String tipe = rs.getString("tipe");
-                String tahun = rs.getString("tahun");
-                
-                Object[] rowData = {platNomor, brands, tipe, tahun};
-                model.addRow(rowData);
-            }
-            
-            rs.close();
-            st.close();
-        } catch (Exception e) {
-            Logger.getLogger(Koneksi.class.getName()).log(Level.SEVERE, null, e);
-        }
+        listMotor.clear();
     }
 }
