@@ -15,6 +15,8 @@ public class Koneksi {
     static PreparedStatement pst;
     public static ResultSet rs;
     
+    // Ganti sesuai dengan preferensi koneksi masing-masing
+    
     public static Connection getConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
