@@ -13,7 +13,6 @@ import javax.swing.table.DefaultTableModel;
 import setoran.DatabaseUser;
 import setoran.Koneksi;
 import setoran.Motor;
-
 /**
  *
  * @author YOGA
@@ -84,14 +83,11 @@ public class PanelRiwayat extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
-
     private void getData() {
         clearTable();
         
@@ -107,16 +103,14 @@ public class PanelRiwayat extends javax.swing.JPanel {
                 String namaMotor = Koneksi.rs.getString("nama_motor");
                 int nominal = Koneksi.rs.getInt("nominal");
                 
-                Object[] rowData = {no, tanggalMulai, tanggalSelesai, namaMotor,nominal};
+                Object[] rowData = {no++, tanggalMulai, tanggalSelesai, namaMotor,nominal};
                 model.addRow(rowData);
-                
             }
         } catch (SQLException ex) {
             System.out.println("eror");
             Logger.getLogger(PanelRiwayat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
     private void clearTable() {
         model.setRowCount(0);
         listMotor.clear();
