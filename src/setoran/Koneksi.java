@@ -3,7 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package setoran;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.swing.JOptionPane;
 /**
  *
@@ -37,6 +43,16 @@ public class Koneksi {
         }
     }
     
+    public static <T> List <T> query(String sql, Class<T> clazz) {
+        try {
+            st = koneksi.prepareStatement(sql);
+            return resultSetToObject(st.executeQuery(sql), clazz);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
     public static void disconnect() throws SQLException {
         koneksi.close();
     }
@@ -49,5 +65,35 @@ public class Koneksi {
             e.printStackTrace(System.out);
             System.out.println(e.getMessage());
         }
+    }
+
+    public static <T> List <T> resultSetToObject(ResultSet resultSet, Class<T> clazz) throws SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+
+        List<Field> fields = Arrays.asList(clazz.getDeclaredFields());
+        for(Field field: fields) {
+            field.setAccessible(true);
+        }
+
+        List<T> list = new ArrayList<>();
+        while(resultSet.next()) {
+
+            T dto = clazz.getConstructor().newInstance();
+
+            for(Field field: fields) {
+                String name = field.getName();
+
+                try{
+                    String value = resultSet.getString(name);
+                    field.set(dto, field.getType().getConstructor(String.class).newInstance(value));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            list.add(dto);
+
+        }
+        return list;
     }
 }
