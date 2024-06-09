@@ -373,7 +373,7 @@ public class PanelSewa extends javax.swing.JPanel {
     private javax.swing.JLabel transmisiLabel;
     // End of variables declaration//GEN-END:variables
 
-    private void getData() {
+    public void getData() {
         clearTable();
         
         try {

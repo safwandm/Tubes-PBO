@@ -24,6 +24,11 @@ public class PanelRiwayat extends javax.swing.JPanel {
     public PanelRiwayat() {
         initComponents();
         model = (DefaultTableModel) jTable1.getModel();
+        
+        if (DatabaseUser.currentUser.getTipeAkun().equals("Mitra")) {
+            jLabel1.setText("Riwayat Penyewaan");
+        }
+        
         getData();
     }
 
@@ -88,10 +93,17 @@ public class PanelRiwayat extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
-    private void getData() {
+    public void getData() {
         clearTable();
         
-        String sql = "SELECT * FROM vu_transaksi_nama_motor WHERE id_user = " + DatabaseUser.currentUser.getIdUser();
+        String sql;
+        
+        if (DatabaseUser.currentUser.getTipeAkun().equals("Mitra")) {
+            sql = "SELECT * FROM vu_join_transaksi_motor WHERE id_pemilik = " + DatabaseUser.currentUser.getIdUser();
+        } else {
+            sql = "SELECT * FROM vu_join_transaksi_motor WHERE id_user = " + DatabaseUser.currentUser.getIdUser();
+        }
+        
         
         Koneksi.query(sql);
         int no = 1;

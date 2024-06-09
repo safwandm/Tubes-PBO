@@ -21,8 +21,9 @@ public class DialogSewaMotor extends javax.swing.JDialog {
     /**
      * Creates new form DialogSewa
      */
-    
+        
     private static Motor m;
+    private PanelSewa ps;
     
     public DialogSewaMotor(java.awt.Frame parent, boolean modal, Motor motor) {
         super(parent, modal);
@@ -144,6 +145,7 @@ public class DialogSewaMotor extends javax.swing.JDialog {
         
         try {
             Koneksi.update(updateQ);
+            changeStatus(m.getIdMotor());
             JOptionPane. showMessageDialog (null, "Pemesanan berhasil"
                         , "Success", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
@@ -216,4 +218,9 @@ public class DialogSewaMotor extends javax.swing.JDialog {
     private com.toedter.calendar.JDateChooser jdcSetAkhirSewa;
     private com.toedter.calendar.JDateChooser jdcSetMulaiSewa;
     // End of variables declaration//GEN-END:variables
+
+    private void changeStatus(int idMotor) throws Exception {
+        String updateQ = String.format("update Motor set status_motor = 'Disewa' where id_motor = %d", idMotor); 
+            Koneksi.update(updateQ);
+    }
 }
