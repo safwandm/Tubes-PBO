@@ -31,7 +31,7 @@ public class DatabaseUser extends DefaultTableModel {
     
     public static void registerUser(String tipeAkun, String username, String password, int age) {
         try {
-            String sql = String.format("INSERT INTO user VALUES('"
+            String sql = String.format("INSERT INTO user VALUES(NULL, '"
                 + username + "', '"
                 + password + "', '"
                 + age + "', '"
