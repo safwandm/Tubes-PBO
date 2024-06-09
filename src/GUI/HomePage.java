@@ -17,15 +17,19 @@ public class HomePage extends javax.swing.JFrame {
     PanelRiwayat pRiwayat;
     
     public HomePage() {
-        initComponents();
-        this.setVisible(true);
-        pSewa = new PanelSewa();
-        pRiwayat = new PanelRiwayat();
-        PMotorSaya = new PanelMotorSaya();
-        jTabbedPane1.add(pSewa);
-        jTabbedPane1.add(pRiwayat);
-        jTabbedPane1.add(PMotorSaya);
-        
+        if (DatabaseUser.currentUser == null){
+            new LoginPage();
+            this.dispose();
+        } else {
+            initComponents();
+            this.setVisible(true);
+            pSewa = new PanelSewa();
+            pRiwayat = new PanelRiwayat();
+            PMotorSaya = new PanelMotorSaya();
+            jTabbedPane1.add(pSewa);
+            jTabbedPane1.add(pRiwayat);
+            jTabbedPane1.add(PMotorSaya);
+        }     
     }
 
     /**
