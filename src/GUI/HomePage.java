@@ -176,6 +176,7 @@ public class HomePage extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         jTabbedPane1.setSelectedIndex(0);
+        pSewa.getData();
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -189,6 +190,7 @@ public class HomePage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Menu Motor Saya hanya bisa diakses oleh mitra", "", HEIGHT);
         } else {
             jTabbedPane1.setSelectedIndex(2);
+            PMotorSaya.getData();
         }
         
     }//GEN-LAST:event_jButton3ActionPerformed
