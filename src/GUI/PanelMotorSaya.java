@@ -247,7 +247,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 //        System.out.println(this.get);
 //        DialogTambahMotor dtm = new DialogTambahMotor((JFrame) (this.getParent().getParent().getParent()), true);
-        DialogTambahMotor dtm = new DialogTambahMotor((JFrame) this.getTopLevelAncestor(), true);
+        DialogTambahMotor dtm = new DialogTambahMotor((JFrame) this.getTopLevelAncestor(), true, this);
         dtm.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -270,7 +270,8 @@ public class PanelMotorSaya extends javax.swing.JPanel {
     private javax.swing.JTable motorTable;
     // End of variables declaration//GEN-END:variables
 
-    private void getData() {
+    public void getData() {
+        clearTable();
         int n = 0;
         try {
             
@@ -282,7 +283,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                 n += Koneksi.rs.getInt("nominal");
             }
             
-            sql = String.format("Select * from Motor where id_pemilik = '%s'", idUser);
+            sql = String.format("Select * from motor where id_pemilik = %s", idUser);
             Koneksi.query(sql);
             
             while (Koneksi.rs.next()) {
@@ -308,5 +309,9 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+    private void clearTable() {
+        model.setRowCount(0);
+        listMotor.clear();
     }
 }

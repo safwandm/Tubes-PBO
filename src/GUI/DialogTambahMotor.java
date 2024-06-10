@@ -24,10 +24,18 @@ public class DialogTambahMotor extends javax.swing.JDialog {
     int inputTahun;
     String inputTransmisi;
     int inputSilinder;
+    PanelMotorSaya panelMotor = null;
 
     public DialogTambahMotor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+    }
+    public DialogTambahMotor(java.awt.Frame parent, boolean modal, PanelMotorSaya panelMotor) {
+        super(parent, modal);
+        initComponents();
+
+        this.panelMotor = panelMotor;
     }
 
     /**
@@ -196,6 +204,9 @@ public class DialogTambahMotor extends javax.swing.JDialog {
             Koneksi.update(sql);
             JOptionPane.showMessageDialog(this, "Berhasil Menambahkan Motor");
             this.dispose();
+            
+            if (panelMotor != null)
+                panelMotor.getData();
         } catch (SQLException ex) {
             Logger.getLogger(DialogTambahMotor.class.getName()).log(Level.SEVERE, null, ex);
         }
