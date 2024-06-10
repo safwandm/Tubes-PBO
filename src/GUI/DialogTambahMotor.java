@@ -5,11 +5,13 @@
 package GUI;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import setoran.DatabaseUser;
 import setoran.Koneksi;
+import setoran.Motor;
 
 /**
  *
@@ -181,9 +183,16 @@ public class DialogTambahMotor extends javax.swing.JDialog {
         inputTahun = (int) tahunSpinner.getValue();
         inputSilinder = (int) silinderSpinner.getValue();
         int hargaHarian = hitungHarga(inputSilinder, inputTransmisi);
-        
+            
         try {
-            String sql = "INSERT INTO `motor` (`id_motor`, `plat_nomor`, `brand`, `tipe`, `tahun`, `transmisi`, `status_motor`, `silinder`, `harga_harian`, `id_pemilik`) VALUES (NULL, '" + inputPlatNomor + "', '" + inputBrand + "', '"+ inputTipe +"', " + inputTahun + ", '" + inputTransmisi + "', 'Tersedia', " + inputSilinder + ", " + hargaHarian + ", " + DatabaseUser.currentUser.getIdUser() + ")";
+            String sql = String.format("SELECT * FROM motor WHERE plat_nomor='%s'", inputPlatNomor);
+            List<Motor> existing = Koneksi.query(sql, Motor.class);
+            if (existing == null) {
+                JOptionPane.showMessageDialog(this, "Motor sudah ter registrasi", "", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            sql = "INSERT INTO `motor` (`id_motor`, `plat_nomor`, `brand`, `tipe`, `tahun`, `transmisi`, `status_motor`, `silinder`, `harga_harian`, `id_pemilik`) VALUES (NULL, '" + inputPlatNomor + "', '" + inputBrand + "', '"+ inputTipe +"', " + inputTahun + ", '" + inputTransmisi + "', 'Tersedia', " + inputSilinder + ", " + hargaHarian + ", " + DatabaseUser.currentUser.getIdUser() + ")";
             Koneksi.update(sql);
             JOptionPane.showMessageDialog(this, "Berhasil Menambahkan Motor");
             this.dispose();

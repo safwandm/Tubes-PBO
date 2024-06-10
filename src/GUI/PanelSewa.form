@@ -337,37 +337,37 @@
     </Component>
     <Component class="javax.swing.JLabel" name="nomorPolisiLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel12"/>
+        <Property name="text" type="java.lang.String" value="--"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="brandLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel13"/>
+        <Property name="text" type="java.lang.String" value="--"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="tipeLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel14"/>
+        <Property name="text" type="java.lang.String" value="--"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="transmisiLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel15"/>
+        <Property name="text" type="java.lang.String" value="--"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="tahunLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel16"/>
+        <Property name="text" type="java.lang.String" value="--"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="silinderLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel17"/>
+        <Property name="text" type="java.lang.String" value="--"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="hargaLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel18"/>
+        <Property name="text" type="java.lang.String" value="--"/>
       </Properties>
     </Component>
   </SubComponents>
