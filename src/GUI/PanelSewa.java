@@ -408,9 +408,10 @@ public class PanelSewa extends javax.swing.JPanel {
         try {
             String sql = String.format("select * from vu_join_transaksi_motor where id_user = %d", idUser); 
             Koneksi.query(sql);
-            Koneksi.rs.next();
-            if (Koneksi.rs.getString("status_transaksi").equals("aktif")) {
-                return true;
+                while (Koneksi.rs.next()) {
+                if (Koneksi.rs.getString("status_transaksi").equals("aktif")) {
+                    return true;
+                }
             }
         } catch (Exception e) {
             JOptionPane. showMessageDialog (null, e.getMessage()
@@ -418,6 +419,7 @@ public class PanelSewa extends javax.swing.JPanel {
         }
         return false;
     }
+
     
 //    private void getData(String brand) {
 //        DefaultTableModel model = (DefaultTableModel) motorTable.getModel();

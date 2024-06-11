@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -100,7 +101,7 @@ public class Transaksi {
         LocalDate endDate = LocalDate.parse(tgl_selesai, formatter);
 
         // Calculate the number of days between
-        long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
+        long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);        
         
         return (int)daysBetween + 1;
         

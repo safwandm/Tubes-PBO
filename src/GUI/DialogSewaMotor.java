@@ -140,8 +140,8 @@ public class DialogSewaMotor extends javax.swing.JDialog {
         String mulaiDateF = dateFormat.format(mulaiDate);
         String akhirDateF = dateFormat.format(akhirDate);
         
-        int hariSewa = Transaksi.getHariSewa(mulaiDateF, mulaiDateF);
-
+        int hariSewa = Transaksi.getHariSewa(mulaiDateF, akhirDateF);
+        
         String updateQ = String.format("insert into transaksi(id_user, id_motor, tanggal_mulai, tanggal_selesai, nominal, status_transaksi) values(%d, %d, '%s', '%s', %d, 'aktif')", 
                 DatabaseUser.currentUser.getIdUser(), m.getIdMotor(), mulaiDateF, akhirDateF, m.getHargaHarian() * hariSewa);
         

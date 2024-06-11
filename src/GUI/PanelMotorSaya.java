@@ -6,7 +6,9 @@ package GUI;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import setoran.DatabaseUser;
 import setoran.Koneksi;
@@ -23,6 +25,8 @@ public class PanelMotorSaya extends javax.swing.JPanel {
     ArrayList<Motor> listMotor = new ArrayList<>();
     Motor selectedMotor;    
     
+    String sql;
+    
     public PanelMotorSaya(HomePage homepage) {
         initComponents();
         Koneksi.getConnection();
@@ -32,6 +36,17 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         jpBulanan.setVisible(false);
         getData();
         hm = homepage;
+        
+        motorTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) {
+                    btnHapusMotor.setVisible(true);
+                } else if (motorTable.getSelectedRow() == -1) {
+                    btnHapusMotor.setVisible(false);
+                }
+            }
+        });
     }
 
     /**
@@ -58,6 +73,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         motorTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        btnHapusMotor = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(742, 423));
@@ -172,7 +188,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Plat Nomor", "Brand", "Tipe", "Transmisi", "Tahun"
+                "No", "Plat Nomor", "Brand", "Tipe", "Transmisi", "Tahun", "Status"
             }
         ));
         jScrollPane1.setViewportView(motorTable);
@@ -201,6 +217,13 @@ public class PanelMotorSaya extends javax.swing.JPanel {
             }
         });
 
+        btnHapusMotor.setText("Hapus Motor");
+        btnHapusMotor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusMotorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -212,6 +235,8 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
+                        .addComponent(btnHapusMotor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,7 +267,9 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(btnHapusMotor))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -255,8 +282,37 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         dtm.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnHapusMotorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusMotorActionPerformed
+        // TODO add your handling code here:
+        selectedMotor = listMotor.get(motorTable.getSelectedRow());        
+        if (selectedMotor.getStatusMotor().equals("Tersedia")) {
+            
+            try {
+                sql = String.format("delete from transaksi where id_motor = %d", 
+                        selectedMotor.getIdMotor());
+                Koneksi.update(sql);
+                
+                sql = String.format("delete from motor where id_motor = %d and id_pemilik = %d", 
+                        selectedMotor.getIdMotor(), selectedMotor.getIdPemilik());
+                Koneksi.update(sql);
+                
+                hm.refresh();
+                JOptionPane. showMessageDialog (null, "Pemesanan berhasil lmo"
+                    , "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane. showMessageDialog (null, e.getMessage()
+                    , "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        } else {
+            JOptionPane. showMessageDialog (null, "Motor masih disewa pelanggan"
+                , "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnHapusMotorActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnHapusMotor;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -282,7 +338,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
             
             int idUser = DatabaseUser.currentUser.getIdUser();
             
-            String sql = "SELECT * FROM vu_join_transaksi_motor WHERE id_pemilik = " + idUser + " and status_transaksi = 'aktif'";
+            sql = "SELECT * FROM vu_join_transaksi_motor WHERE id_pemilik = " + idUser + " and status_transaksi = 'aktif'";
             Koneksi.query(sql);
             while (Koneksi.rs.next()) {
                 n += Koneksi.rs.getInt("nominal");
@@ -306,9 +362,19 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                     )
                 );
             }
-                                    
+                 
+            Motor tempM;
             for (int i = 0; i < listMotor.size(); i++) {
-                Object[] rowData = {i + 1, listMotor.get(i).getPlatNomor(),listMotor.get(i).getBrand(), listMotor.get(i).getTipe(), listMotor.get(i).getTransmisi(), listMotor.get(i).getTahun()};
+                tempM = listMotor.get(i);
+                Object[] rowData = {
+                    i + 1, 
+                    tempM.getPlatNomor(), 
+                    tempM.getBrand(), 
+                    tempM.getTipe(), 
+                    tempM.getTransmisi(), 
+                    tempM.getTahun(),
+                    tempM.getStatusMotor()
+                };
                 model.addRow(rowData);
             }
                         
