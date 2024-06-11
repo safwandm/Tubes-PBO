@@ -12,6 +12,8 @@ import setoran.DatabaseUser;
 import setoran.Koneksi;
 import setoran.Motor;
 
+import java.util.Calendar;
+import java.util.Date;
 /**
  *
  * @author YOGA
@@ -47,6 +49,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -85,7 +88,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel7))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -97,7 +100,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel7)
-                        .addGap(0, 26, Short.MAX_VALUE))
+                        .addGap(0, 28, Short.MAX_VALUE))
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -115,6 +118,10 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel8.setText("Rp");
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel9.setText("0");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -123,7 +130,11 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 152, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel9)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -133,6 +144,8 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel9)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
                 .addContainerGap())
@@ -148,7 +161,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(144, Short.MAX_VALUE)
+                .addContainerGap(145, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addContainerGap())
         );
@@ -157,7 +170,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -247,7 +260,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 //        System.out.println(this.get);
 //        DialogTambahMotor dtm = new DialogTambahMotor((JFrame) (this.getParent().getParent().getParent()), true);
-        DialogTambahMotor dtm = new DialogTambahMotor((JFrame) this.getTopLevelAncestor(), true);
+        DialogTambahMotor dtm = new DialogTambahMotor((JFrame) this.getTopLevelAncestor(), true, this);
         dtm.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -262,6 +275,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -270,8 +284,10 @@ public class PanelMotorSaya extends javax.swing.JPanel {
     private javax.swing.JTable motorTable;
     // End of variables declaration//GEN-END:variables
 
-    private void getData() {
+    public void getData() {
+        clearTable();
         int n = 0;
+        int nBulanIni = 0;
         try {
             
             int idUser = DatabaseUser.currentUser.getIdUser();
@@ -281,8 +297,26 @@ public class PanelMotorSaya extends javax.swing.JPanel {
             while (Koneksi.rs.next()) {
                 n += Koneksi.rs.getInt("nominal");
             }
+            jLabel7.setText(Integer.toString(n));
+
+            //  ini lebih rapih tapi butuh mysql_upgrade dulu baru jalan
+//            sql = "SELECT * FROM `vu_transaksi_motor` WHERE Month(tanggal_mulai) = Month(CURRENT_DATE()) AND YEAR(tanggal_mulai) = YEAR(CURRENT_DATE()) AND id_pemilik = " + idUser;
+//            Koneksi.query(sql);
+//            while (Koneksi.rs.next()) {
+//                nBulanIni += Koneksi.rs.getInt("nominal");
+//            }
+//            jLabel9.setText(Integer.toString(nBulanIni));
             
-            sql = String.format("Select * from Motor where id_pemilik = '%s'", idUser);
+            sql = "SELECT * FROM `vu_transaksi_motor` WHERE id_pemilik = " + idUser;
+            Koneksi.query(sql);
+            while (Koneksi.rs.next()) {
+                var date = Koneksi.rs.getDate("tanggal_mulai");
+                if (isDateInCurrentMonth(date))
+                    nBulanIni += Koneksi.rs.getInt("nominal");
+            }
+            jLabel9.setText(Integer.toString(nBulanIni));
+            
+            sql = String.format("Select * from motor where id_pemilik = %s", idUser);
             Koneksi.query(sql);
             
             while (Koneksi.rs.next()) {
@@ -304,9 +338,29 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                 model.addRow(rowData);
             }
                         
-            jLabel7.setText(Integer.toString(n));
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+    private void clearTable() {
+        model.setRowCount(0);
+        listMotor.clear();
+    }
+    
+    public static boolean isDateInCurrentMonth(Date dateToCheck) {
+        Calendar calendar = Calendar.getInstance();
+
+        // Get month and year of the date to check
+        calendar.setTime(dateToCheck);
+        int checkMonth = calendar.get(Calendar.MONTH);
+        int checkYear = calendar.get(Calendar.YEAR);
+
+        // Get month and year of the current date
+        calendar.setTime(new Date());
+        int currentMonth = calendar.get(Calendar.MONTH);
+        int currentYear = calendar.get(Calendar.YEAR);
+
+        // Compare month and year
+        return (checkMonth == currentMonth) && (checkYear == currentYear);
     }
 }
