@@ -76,11 +76,6 @@ public class DialogTambahMotor extends javax.swing.JDialog {
         jLabel6.setText("Transmisi");
 
         transmisiBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Manual", "Matic" }));
-        transmisiBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                transmisiBoxActionPerformed(evt);
-            }
-        });
 
         jLabel7.setText("Silinder");
 
@@ -181,6 +176,7 @@ public class DialogTambahMotor extends javax.swing.JDialog {
         inputBrand = brandField.getText();
         inputTipe = tipeField.getText();
         inputTahun = (int) tahunSpinner.getValue();
+        inputTransmisi = transmisiBox.getSelectedItem().toString();
         inputSilinder = (int) silinderSpinner.getValue();
         int hargaHarian = hitungHarga(inputSilinder, inputTransmisi);
             
@@ -195,15 +191,12 @@ public class DialogTambahMotor extends javax.swing.JDialog {
             sql = "INSERT INTO `motor` (`id_motor`, `plat_nomor`, `brand`, `tipe`, `tahun`, `transmisi`, `status_motor`, `silinder`, `harga_harian`, `id_pemilik`) VALUES (NULL, '" + inputPlatNomor + "', '" + inputBrand + "', '"+ inputTipe +"', " + inputTahun + ", '" + inputTransmisi + "', 'Tersedia', " + inputSilinder + ", " + hargaHarian + ", " + DatabaseUser.currentUser.getIdUser() + ")";
             Koneksi.update(sql);
             JOptionPane.showMessageDialog(this, "Berhasil Menambahkan Motor");
+            ((HomePage)this.getParent()).refresh();
             this.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(DialogTambahMotor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_simpanBtnActionPerformed
-
-    private void transmisiBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transmisiBoxActionPerformed
-        inputTransmisi = transmisiBox.getSelectedItem().toString();
-    }//GEN-LAST:event_transmisiBoxActionPerformed
 
     /**
      * @param args the command line arguments

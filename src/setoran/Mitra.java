@@ -17,7 +17,7 @@ public class Mitra extends User {
     public Mitra(int idUser, String username, String password, int umur) {
         super(idUser, username, password, umur, "Mitra");
     }
-
+    
     public Motor getDisewa() {
         return disewakan;
     }

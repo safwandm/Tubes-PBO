@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import setoran.*;
 /**
@@ -16,17 +17,18 @@ import setoran.*;
  */
 public class PanelSewa extends javax.swing.JPanel {
     
+    HomePage hm;;
     DefaultTableModel model;
     ArrayList<Motor> listMotor = new ArrayList<>();;
     Motor selectedMotor;
     
-    public PanelSewa() {
+    public PanelSewa(HomePage homepage) {
         initComponents();
         Koneksi.getConnection();
         model = (DefaultTableModel) motorTable.getModel();
         motorTable.getColumnModel().getColumn(0).setPreferredWidth(25);
         getData();
-//        motorTable.removeColumn(motorTable.getColumnModel().getColumn(1));
+        hm = homepage;
     }
 
     /**
@@ -323,7 +325,14 @@ public class PanelSewa extends javax.swing.JPanel {
 
     private void sewaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sewaBtnActionPerformed
         // TODO add your handling code here:
-        DialogSewaMotor dsm = new DialogSewaMotor((JFrame) this.getTopLevelAncestor(), true, selectedMotor);
+        
+        if (isRenting(DatabaseUser.currentUser.getIdUser())) {
+            JOptionPane. showMessageDialog (null, "Anda sedang menyewa sebuah motor, Kembalikan motor jika ingin menyewa lagi"
+                    , "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        DialogSewaMotor dsm = new DialogSewaMotor(hm, true, selectedMotor);
         dsm.setVisible(true);
     }//GEN-LAST:event_sewaBtnActionPerformed
 
@@ -370,18 +379,20 @@ public class PanelSewa extends javax.swing.JPanel {
                 sql += "AND transmisi = '" + transmisiDropdown.getSelectedItem().toString() + "'";
             }
             Koneksi.query(sql);
-            while(Koneksi.rs.next()){
-                int idMotor = Koneksi.rs.getInt("id_motor");
-                String platNomor = Koneksi.rs.getString("plat_nomor");
-                String brand = Koneksi.rs.getString("brand");
-                String tipe = Koneksi.rs.getString("tipe");
-                String tahun = Koneksi.rs.getString("tahun");
-                String transmisi = Koneksi.rs.getString("transmisi");
-                String statusMotor = Koneksi.rs.getString("status_motor");
-                int silinder = Koneksi.rs.getInt("silinder");
-                int hargaHarian = Koneksi.rs.getInt("harga_harian");
-                
-                listMotor.add(new Motor(idMotor, platNomor, brand, tipe, tahun, transmisi, statusMotor, silinder, hargaHarian));
+            while(Koneksi.rs.next()){                
+                listMotor.add(new Motor(
+                        Koneksi.rs.getInt("id_motor"),
+                        Koneksi.rs.getString("plat_nomor"),
+                        Koneksi.rs.getString("brand"),
+                        Koneksi.rs.getString("tipe"),
+                        Koneksi.rs.getString("tahun"),
+                        Koneksi.rs.getString("transmisi"),
+                        Koneksi.rs.getString("status_motor"),
+                        Koneksi.rs.getInt("silinder"),
+                        Koneksi.rs.getInt("harga_harian"),
+                        Koneksi.rs.getInt("id_pemilik")
+                    )
+                );
             }
             
             for (int i = 0; i < listMotor.size(); i++) {
@@ -391,6 +402,21 @@ public class PanelSewa extends javax.swing.JPanel {
         } catch (SQLException e) {
             Logger.getLogger(Koneksi.class.getName()).log(Level.SEVERE, null, e);
         }
+    }
+    
+    private boolean isRenting(int idUser) {
+        try {
+            String sql = String.format("select * from vu_join_transaksi_motor where id_user = %d", idUser); 
+            Koneksi.query(sql);
+            Koneksi.rs.next();
+            if (Koneksi.rs.getString("status_transaksi").equals("aktif")) {
+                return true;
+            }
+        } catch (Exception e) {
+            JOptionPane. showMessageDialog (null, e.getMessage()
+                    , "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
     }
     
 //    private void getData(String brand) {

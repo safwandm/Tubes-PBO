@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import setoran.DatabaseUser;
 import setoran.Koneksi;
@@ -21,7 +22,7 @@ public class PanelRiwayat extends javax.swing.JPanel {
     ArrayList<Motor> listMotor = new ArrayList<>();
     DefaultTableModel model;
 
-    public PanelRiwayat() {
+    public PanelRiwayat(JFrame homepage) {
         initComponents();
         model = (DefaultTableModel) jTable1.getModel();
         
