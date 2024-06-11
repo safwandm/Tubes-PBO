@@ -12,7 +12,7 @@ public class Pelanggan extends User {
     public Pelanggan(int idUser, String username, String password, int umur) {
         super(idUser,username, password, umur, "Pelanggan");
     }
-
+    
     public Motor getSewa() {
         return sewa;
     }

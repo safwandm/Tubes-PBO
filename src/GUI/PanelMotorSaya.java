@@ -6,30 +6,47 @@ package GUI;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import setoran.DatabaseUser;
 import setoran.Koneksi;
 import setoran.Motor;
 
-import java.util.Calendar;
-import java.util.Date;
 /**
  *
  * @author YOGA
  */
 public class PanelMotorSaya extends javax.swing.JPanel {
 
+    HomePage hm;
     DefaultTableModel model;
     ArrayList<Motor> listMotor = new ArrayList<>();
     Motor selectedMotor;    
     
-    public PanelMotorSaya() {
+    String sql;
+    
+    public PanelMotorSaya(HomePage homepage) {
         initComponents();
         Koneksi.getConnection();
         model = (DefaultTableModel) motorTable.getModel();
         motorTable.getColumnModel().getColumn(0).setPreferredWidth(25);
+        jpRating.setVisible(false);
+        jpBulanan.setVisible(false);
         getData();
+        hm = homepage;
+        
+        motorTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) {
+                    btnHapusMotor.setVisible(true);
+                } else if (motorTable.getSelectedRow() == -1) {
+                    btnHapusMotor.setVisible(false);
+                }
+            }
+        });
     }
 
     /**
@@ -46,17 +63,17 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        jpBulanan = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        jpRating = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         motorTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        btnHapusMotor = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(742, 423));
@@ -88,7 +105,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel7))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -100,7 +117,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel7)
-                        .addGap(0, 28, Short.MAX_VALUE))
+                        .addGap(0, 26, Short.MAX_VALUE))
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -108,8 +125,8 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Summary");
 
-        jPanel2.setMaximumSize(new java.awt.Dimension(32767, 100));
-        jPanel2.setPreferredSize(new java.awt.Dimension(200, 100));
+        jpBulanan.setMaximumSize(new java.awt.Dimension(32767, 100));
+        jpBulanan.setPreferredSize(new java.awt.Dimension(200, 100));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -118,59 +135,49 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel8.setText("Rp");
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel9.setText("0");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpBulananLayout = new javax.swing.GroupLayout(jpBulanan);
+        jpBulanan.setLayout(jpBulananLayout);
+        jpBulananLayout.setHorizontalGroup(
+            jpBulananLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpBulananLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel9)))
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 152, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jpBulananLayout.setVerticalGroup(
+            jpBulananLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpBulananLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jpBulananLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpBulananLayout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel9)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jPanel3.setPreferredSize(new java.awt.Dimension(200, 100));
+        jpRating.setPreferredSize(new java.awt.Dimension(200, 100));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel5.setText("Rating");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(145, Short.MAX_VALUE)
+        javax.swing.GroupLayout jpRatingLayout = new javax.swing.GroupLayout(jpRating);
+        jpRating.setLayout(jpRatingLayout);
+        jpRatingLayout.setHorizontalGroup(
+            jpRatingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpRatingLayout.createSequentialGroup()
+                .addContainerGap(144, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        jpRatingLayout.setVerticalGroup(
+            jpRatingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpRatingLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -181,7 +188,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Plat Nomor", "Brand", "Tipe", "Transmisi", "Tahun"
+                "No", "Plat Nomor", "Brand", "Tipe", "Transmisi", "Tahun", "Status"
             }
         ));
         jScrollPane1.setViewportView(motorTable);
@@ -210,6 +217,13 @@ public class PanelMotorSaya extends javax.swing.JPanel {
             }
         });
 
+        btnHapusMotor.setText("Hapus Motor");
+        btnHapusMotor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusMotorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -221,6 +235,8 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
+                        .addComponent(btnHapusMotor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,9 +244,9 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jpBulanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jpRating, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 93, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -242,8 +258,8 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jpBulanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jpRating, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -251,7 +267,9 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(btnHapusMotor))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -260,12 +278,41 @@ public class PanelMotorSaya extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 //        System.out.println(this.get);
 //        DialogTambahMotor dtm = new DialogTambahMotor((JFrame) (this.getParent().getParent().getParent()), true);
-        DialogTambahMotor dtm = new DialogTambahMotor((JFrame) this.getTopLevelAncestor(), true, this);
+        DialogTambahMotor dtm = new DialogTambahMotor(hm, true);
         dtm.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnHapusMotorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusMotorActionPerformed
+        // TODO add your handling code here:
+        selectedMotor = listMotor.get(motorTable.getSelectedRow());        
+        if (selectedMotor.getStatusMotor().equals("Tersedia")) {
+            
+            try {
+                sql = String.format("delete from transaksi where id_motor = %d", 
+                        selectedMotor.getIdMotor());
+                Koneksi.update(sql);
+                
+                sql = String.format("delete from motor where id_motor = %d and id_pemilik = %d", 
+                        selectedMotor.getIdMotor(), selectedMotor.getIdPemilik());
+                Koneksi.update(sql);
+                
+                hm.refresh();
+                JOptionPane. showMessageDialog (null, "Pemesanan berhasil lmo"
+                    , "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane. showMessageDialog (null, e.getMessage()
+                    , "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        } else {
+            JOptionPane. showMessageDialog (null, "Motor masih disewa pelanggan"
+                , "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnHapusMotorActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnHapusMotor;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -275,92 +322,70 @@ public class PanelMotorSaya extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jpBulanan;
+    private javax.swing.JPanel jpRating;
     private javax.swing.JTable motorTable;
     // End of variables declaration//GEN-END:variables
 
     public void getData() {
         clearTable();
         int n = 0;
-        int nBulanIni = 0;
+        
         try {
             
             int idUser = DatabaseUser.currentUser.getIdUser();
             
-            String sql = "SELECT * FROM vu_transaksi_motor WHERE id_pemilik = " + idUser;
+            sql = "SELECT * FROM vu_join_transaksi_motor WHERE id_pemilik = " + idUser + " and status_transaksi = 'aktif'";
             Koneksi.query(sql);
             while (Koneksi.rs.next()) {
                 n += Koneksi.rs.getInt("nominal");
             }
-            jLabel7.setText(Integer.toString(n));
-
-            //  ini lebih rapih tapi butuh mysql_upgrade dulu baru jalan
-//            sql = "SELECT * FROM `vu_transaksi_motor` WHERE Month(tanggal_mulai) = Month(CURRENT_DATE()) AND YEAR(tanggal_mulai) = YEAR(CURRENT_DATE()) AND id_pemilik = " + idUser;
-//            Koneksi.query(sql);
-//            while (Koneksi.rs.next()) {
-//                nBulanIni += Koneksi.rs.getInt("nominal");
-//            }
-//            jLabel9.setText(Integer.toString(nBulanIni));
             
-            sql = "SELECT * FROM `vu_transaksi_motor` WHERE id_pemilik = " + idUser;
-            Koneksi.query(sql);
-            while (Koneksi.rs.next()) {
-                var date = Koneksi.rs.getDate("tanggal_mulai");
-                if (isDateInCurrentMonth(date))
-                    nBulanIni += Koneksi.rs.getInt("nominal");
-            }
-            jLabel9.setText(Integer.toString(nBulanIni));
-            
-            sql = String.format("Select * from motor where id_pemilik = %s", idUser);
+            sql = String.format("Select * from Motor where id_pemilik = '%s'", idUser);
             Koneksi.query(sql);
             
-            while (Koneksi.rs.next()) {
-                int idMotor = Koneksi.rs.getInt("id_motor");
-                String platNomor = Koneksi.rs.getString("plat_nomor");
-                String brand = Koneksi.rs.getString("brand");
-                String tipe = Koneksi.rs.getString("tipe");
-                String tahun = Koneksi.rs.getString("tahun");
-                String transmisi = Koneksi.rs.getString("transmisi");
-                String statusMotor = Koneksi.rs.getString("status_motor");
-                int silinder = Koneksi.rs.getInt("silinder");
-                int hargaHarian = Koneksi.rs.getInt("harga_harian");
-                
-                listMotor.add(new Motor(idMotor, platNomor, brand, tipe, tahun, transmisi, statusMotor, silinder, hargaHarian));
+            while (Koneksi.rs.next()) {                
+                listMotor.add(new Motor(
+                        Koneksi.rs.getInt("id_motor"),
+                        Koneksi.rs.getString("plat_nomor"),
+                        Koneksi.rs.getString("brand"),
+                        Koneksi.rs.getString("tipe"),
+                        Koneksi.rs.getString("tahun"),
+                        Koneksi.rs.getString("transmisi"),
+                        Koneksi.rs.getString("status_motor"),
+                        Koneksi.rs.getInt("silinder"),
+                        Koneksi.rs.getInt("harga_harian"),
+                        Koneksi.rs.getInt("id_pemilik")
+                    )
+                );
             }
-                        
+                 
+            Motor tempM;
             for (int i = 0; i < listMotor.size(); i++) {
-                Object[] rowData = {i + 1, listMotor.get(i).getPlatNomor(),listMotor.get(i).getBrand(), listMotor.get(i).getTipe(), listMotor.get(i).getTransmisi(), listMotor.get(i).getTahun()};
+                tempM = listMotor.get(i);
+                Object[] rowData = {
+                    i + 1, 
+                    tempM.getPlatNomor(), 
+                    tempM.getBrand(), 
+                    tempM.getTipe(), 
+                    tempM.getTransmisi(), 
+                    tempM.getTahun(),
+                    tempM.getStatusMotor()
+                };
                 model.addRow(rowData);
             }
                         
+            jLabel7.setText(Integer.toString(n));
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
+    
     private void clearTable() {
         model.setRowCount(0);
         listMotor.clear();
-    }
-    
-    public static boolean isDateInCurrentMonth(Date dateToCheck) {
-        Calendar calendar = Calendar.getInstance();
-
-        // Get month and year of the date to check
-        calendar.setTime(dateToCheck);
-        int checkMonth = calendar.get(Calendar.MONTH);
-        int checkYear = calendar.get(Calendar.YEAR);
-
-        // Get month and year of the current date
-        calendar.setTime(new Date());
-        int currentMonth = calendar.get(Calendar.MONTH);
-        int currentYear = calendar.get(Calendar.YEAR);
-
-        // Compare month and year
-        return (checkMonth == currentMonth) && (checkYear == currentYear);
     }
 }

@@ -19,6 +19,7 @@ public class Motor {
     private String statusMotor;
     private int silinder;
     private int hargaHarian;
+    private int idPemilik;
     
 //    private String nama;
 //    private User pemilik;
@@ -31,9 +32,10 @@ public class Motor {
 //        this.pemilik = pemilik;
 //        this.hargaSewa = hargaSewa;
 //        tersedia = true;
-//    }
+//    }    
+    
 
-    public Motor(int id_motor, String plat_nomor, String brand, String tipe, String tahun, String transmisi, String status_motor, int silinder, int harga_harian) {
+    public Motor(int id_motor, String plat_nomor, String brand, String tipe, String tahun, String transmisi, String status_motor, int silinder, int harga_harian, int id_pemilik) {
         this.idMotor = id_motor;
         this.platNomor = plat_nomor;
         this.brand = brand;
@@ -43,6 +45,7 @@ public class Motor {
         this.statusMotor = status_motor;
         this.silinder = silinder;
         this.hargaHarian = harga_harian;
+        this.idPemilik = id_pemilik;
     }
 
     public int getIdMotor() {
@@ -101,7 +104,7 @@ public class Motor {
         this.statusMotor = statusMotor;
     }
 
-    public int getSilinder() {
+    public Integer getSilinder() {
         return silinder;
     }
 
@@ -109,12 +112,20 @@ public class Motor {
         this.silinder = silinder;
     }
 
-    public int getHargaHarian() {
+    public Integer getHargaHarian() {
         return hargaHarian;
     }
 
     public void setHargaHarian(int hargaHarian) {
         this.hargaHarian = hargaHarian;
+    }
+    
+    public int getIdPemilik() {
+        return idPemilik;
+    }
+
+    public void setIdPemilik(int idPemilik) {
+        this.idPemilik = idPemilik;
     }
     
 //    public String getNama() {

@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import setoran.DatabaseUser;
 import setoran.Koneksi;
 import setoran.Motor;
+import setoran.Transaksi;
 
 /**
  *
@@ -27,6 +28,7 @@ public class DialogSewaMotor extends javax.swing.JDialog {
     
     public DialogSewaMotor(java.awt.Frame parent, boolean modal, Motor motor) {
         super(parent, modal);
+        
         initComponents();
         
         m = motor;
@@ -138,10 +140,10 @@ public class DialogSewaMotor extends javax.swing.JDialog {
         String mulaiDateF = dateFormat.format(mulaiDate);
         String akhirDateF = dateFormat.format(akhirDate);
         
-        long hariPenyewaan = ((jdcSetAkhirSewa.getDate().getTime() - jdcSetMulaiSewa.getDate().getTime()) / 86400000) + 1;
-
-        String updateQ = String.format("insert into transaksi(id_user, id_motor, tanggal_mulai, tanggal_selesai, nominal) values(%d, %d, '%s', '%s', %d)", 
-                DatabaseUser.currentUser.getIdUser(), m.getIdMotor(), mulaiDateF, akhirDateF, m.getHargaHarian() * hariPenyewaan);
+        int hariSewa = Transaksi.getHariSewa(mulaiDateF, akhirDateF);
+        
+        String updateQ = String.format("insert into transaksi(id_user, id_motor, tanggal_mulai, tanggal_selesai, nominal, status_transaksi) values(%d, %d, '%s', '%s', %d, 'aktif')", 
+                DatabaseUser.currentUser.getIdUser(), m.getIdMotor(), mulaiDateF, akhirDateF, m.getHargaHarian() * hariSewa);
         
         try {
             Koneksi.update(updateQ);
@@ -149,6 +151,7 @@ public class DialogSewaMotor extends javax.swing.JDialog {
             JOptionPane. showMessageDialog (null, "Pemesanan berhasil"
                         , "Success", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
+            ((HomePage)this.getParent()).refresh();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -164,8 +167,6 @@ public class DialogSewaMotor extends javax.swing.JDialog {
         }
         jdcSetAkhirSewa.setMinSelectableDate(jdcSetMulaiSewa.getDate());
     }//GEN-LAST:event_jdcSetMulaiSewaPropertyChange
-
-
 
     /**
      * @param args the command line arguments

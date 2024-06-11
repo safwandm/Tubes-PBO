@@ -5,6 +5,7 @@
 package GUI;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import setoran.DatabaseUser;
 
 /**
@@ -13,7 +14,7 @@ import setoran.DatabaseUser;
  */
 public class HomePage extends javax.swing.JFrame {
     PanelSewa pSewa;
-    PanelMotorSaya PMotorSaya;
+    JPanel pMotor;
     PanelRiwayat pRiwayat;
     
     public HomePage() {
@@ -23,12 +24,19 @@ public class HomePage extends javax.swing.JFrame {
         } else {
             initComponents();
             this.setVisible(true);
-            pSewa = new PanelSewa();
-            pRiwayat = new PanelRiwayat();
-            PMotorSaya = new PanelMotorSaya();
-            jTabbedPane1.add(pSewa);
+            
+            pRiwayat = new PanelRiwayat(this);
+            
+            if (isMitra()) {
+                pMotor = new PanelMotorSaya(this);
+                btnSewa.setVisible(false);
+            } else {
+                pSewa = new PanelSewa(this);
+                pMotor = new PanelMotorDisewa(this);
+                jTabbedPane1.add(pSewa);
+            }
             jTabbedPane1.add(pRiwayat);
-            jTabbedPane1.add(PMotorSaya);
+            jTabbedPane1.add(pMotor);
         }     
     }
 
@@ -43,9 +51,9 @@ public class HomePage extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnSewa = new javax.swing.JButton();
+        btnRiwaya = new javax.swing.JButton();
+        btnMotor = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -61,36 +69,36 @@ public class HomePage extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
-        jButton1.setBackground(new java.awt.Color(254, 255, 255));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setText("Sewa");
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton1.setFocusPainted(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSewa.setBackground(new java.awt.Color(254, 255, 255));
+        btnSewa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSewa.setText("Sewa");
+        btnSewa.setBorder(null);
+        btnSewa.setBorderPainted(false);
+        btnSewa.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnSewa.setFocusPainted(false);
+        btnSewa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSewaActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(254, 255, 255));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton2.setText("Riwayat");
-        jButton2.setBorder(null);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnRiwaya.setBackground(new java.awt.Color(254, 255, 255));
+        btnRiwaya.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnRiwaya.setText("Riwayat");
+        btnRiwaya.setBorder(null);
+        btnRiwaya.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnRiwayaActionPerformed(evt);
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(254, 255, 255));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton3.setText("Motor Saya");
-        jButton3.setBorder(null);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnMotor.setBackground(new java.awt.Color(254, 255, 255));
+        btnMotor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnMotor.setText("Motor Saya");
+        btnMotor.setBorder(null);
+        btnMotor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnMotorActionPerformed(evt);
             }
         });
 
@@ -108,20 +116,20 @@ public class HomePage extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
-            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnSewa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnRiwaya, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+            .addComponent(btnMotor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(128, 128, 128)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSewa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRiwaya, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnMotor, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(248, Short.MAX_VALUE))
@@ -143,13 +151,13 @@ public class HomePage extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(265, 265, 265)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(341, Short.MAX_VALUE))
+                .addContainerGap(300, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -157,6 +165,11 @@ public class HomePage extends javax.swing.JFrame {
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane1StateChanged(evt);
+            }
+        });
         jPanel2.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 740, 520));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -174,26 +187,19 @@ public class HomePage extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        jTabbedPane1.setSelectedIndex(0);
-        pSewa.getData();
+    private void btnSewaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSewaActionPerformed
+        jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount() - 3);
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnSewaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        jTabbedPane1.setSelectedIndex(1);
+    private void btnRiwayaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRiwayaActionPerformed
+        jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount() - 2);
         pRiwayat.getData();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnRiwayaActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (!DatabaseUser.currentUser.getTipeAkun().equals("Mitra")) {
-            JOptionPane.showMessageDialog(this, "Menu Motor Saya hanya bisa diakses oleh mitra", "", HEIGHT);
-        } else {
-            jTabbedPane1.setSelectedIndex(2);
-            PMotorSaya.getData();
-        }
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnMotorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotorActionPerformed
+        jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount() -1);
+    }//GEN-LAST:event_btnMotorActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         
@@ -204,9 +210,12 @@ public class HomePage extends javax.swing.JFrame {
                this.dispose();
                new LoginPage().setVisible(true);
           }
-
-        
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+        // TODO add your handling code here:
+        System.out.println(jTabbedPane1.getSelectedIndex());
+    }//GEN-LAST:event_jTabbedPane1StateChanged
 
     /**
      * @param args the command line arguments
@@ -242,11 +251,25 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
     }
+    
+    public boolean isMitra() {
+        return DatabaseUser.currentUser.getTipeAkun().equals("Mitra");
+    }
+    
+    public void refresh() {
+        if (isMitra()) {
+            ((PanelMotorSaya)pMotor).getData();
+        } else {
+            pSewa.getData();
+            ((PanelMotorDisewa)pMotor).getData();       
+        }
+        pRiwayat.getData();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnMotor;
+    private javax.swing.JButton btnRiwaya;
+    private javax.swing.JButton btnSewa;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
