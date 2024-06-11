@@ -24,18 +24,17 @@ public class HomePage extends javax.swing.JFrame {
         } else {
             initComponents();
             this.setVisible(true);
+            
             pRiwayat = new PanelRiwayat(this);
             
             if (isMitra()) {
-                pSewa = new PanelSewa(this);
                 pMotor = new PanelMotorSaya(this);
-                
                 btnSewa.setVisible(false);
-                jTabbedPane1.add(pSewa);
             } else {
+                pSewa = new PanelSewa(this);
                 pMotor = new PanelMotorDisewa(this);
+                jTabbedPane1.add(pSewa);
             }
-            
             jTabbedPane1.add(pRiwayat);
             jTabbedPane1.add(pMotor);
         }     
@@ -189,12 +188,12 @@ public class HomePage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSewaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSewaActionPerformed
-        jTabbedPane1.setSelectedIndex(0);
+        jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount() - 3);
         
     }//GEN-LAST:event_btnSewaActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        jTabbedPane1.setSelectedIndex(1);
+        jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount() - 2);
         pRiwayat.getData();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -203,7 +202,7 @@ public class HomePage extends javax.swing.JFrame {
 //            JOptionPane.showMessageDialog(this, "Menu Motor Saya hanya bisa diakses oleh mitra", "", HEIGHT);
 //        } else {
 //        }
-        jTabbedPane1.setSelectedIndex(2);
+        jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount() -1);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

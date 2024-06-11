@@ -282,7 +282,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
             
             int idUser = DatabaseUser.currentUser.getIdUser();
             
-            String sql = "SELECT * FROM vu_transaksi_motor WHERE id_pemilik = " + idUser;
+            String sql = "SELECT * FROM vu_transaksi_motor WHERE id_pemilik = " + idUser + " and status_transaksi = 'aktif'";
             Koneksi.query(sql);
             while (Koneksi.rs.next()) {
                 n += Koneksi.rs.getInt("nominal");
