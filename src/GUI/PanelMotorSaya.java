@@ -288,14 +288,8 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         if (selectedMotor.getStatusMotor().equals("Tersedia")) {
             
             try {
-                sql = String.format("delete from transaksi where id_motor = %d", 
-                        selectedMotor.getIdMotor());
-                Koneksi.update(sql);
-                
-                // sql = String.format("delete from motor where id_motor = %d and id_pemilik = %d", 
-                //         selectedMotor.getIdMotor(), selectedMotor.getIdPemilik());
-                // Koneksi.update(sql);
-                Koneksi.delete(selectedMotor, "motor");
+
+                Koneksi.softDelete(selectedMotor, "motor");
                 
                 hm.refresh();
                 JOptionPane. showMessageDialog (null, "Pemesanan berhasil lmo"
@@ -345,7 +339,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                 n += Koneksi.rs.getInt("nominal");
             }
             
-            sql = String.format("Select * from Motor where id_pemilik = '%s'", idUser);
+            sql = String.format("Select * from Motor where id_pemilik = '%s' and deleted = 'false'", idUser);
             Koneksi.query(sql);
             
             while (Koneksi.rs.next()) {                

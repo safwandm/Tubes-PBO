@@ -189,7 +189,7 @@ public class DialogTambahMotor extends javax.swing.JDialog {
         int hargaHarian = hitungHarga(inputSilinder, inputTransmisi);
             
         try {
-            String sql = String.format("SELECT * FROM motor WHERE plat_nomor='%s'", inputPlatNomor);
+            String sql = String.format("SELECT * FROM motor WHERE plat_nomor='%s' and deleted = 'false'", inputPlatNomor);
             List<Motor> existing = Koneksi.query(sql, Motor.class);
             if (existing == null) {
                 JOptionPane.showMessageDialog(this, "Motor sudah ter registrasi", "", JOptionPane.ERROR_MESSAGE);

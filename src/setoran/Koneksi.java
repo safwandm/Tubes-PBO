@@ -143,8 +143,7 @@ public class Koneksi {
     }
 
     // ada parameter table karena belum tentu objeknya disimpan di 1 table saja
-    public static void delete(Deletable data, String table)
-    {
+    public static void delete(Deletable data, String table) {
         try {
             String sql = String.format("delete from " + table +" where " + data.getColId() + " = %d", 
                 data.getId());
@@ -153,5 +152,15 @@ public class Koneksi {
             System.out.println(ex.getMessage());
         }
         
+    }
+
+    public static void softDelete(Deletable data, String table) {
+        try {
+            String sql = String.format("update %s set deleted='true' where %s=%d", 
+                table, data.getColId(), data.getId());
+            Koneksi.update(sql);
+        } catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
     }
 }

@@ -370,7 +370,7 @@ public class PanelSewa extends javax.swing.JPanel {
         clearTable();
         
         try {
-            String sql = "SELECT * FROM motor WHERE status_motor = 'Tersedia'";
+            String sql = "SELECT * FROM motor WHERE status_motor = 'Tersedia' and deleted ='false'";
             
             if (BrandDropdown.getSelectedIndex() != 0) {
                 sql += "AND brand = '" + BrandDropdown.getSelectedItem().toString() + "'";
