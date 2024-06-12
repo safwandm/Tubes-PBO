@@ -9,7 +9,7 @@ package setoran;
  *
  * @author daman1k
  */
-public class Motor {
+public class Motor implements Deletable{
     private int idMotor;
     private String platNomor;
     private String brand;
@@ -50,6 +50,12 @@ public class Motor {
 
     public int getIdMotor() {
         return idMotor;
+    }
+    public int getId(){
+        return idMotor;
+    }
+    public String getColId() {
+        return "id_motor";
     }
 
     public void setIdMotor(int idMotor) {

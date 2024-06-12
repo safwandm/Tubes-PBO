@@ -139,5 +139,17 @@ public class Koneksi {
         }
         return list;
     }
- 
+
+    // ada parameter table karena belum tentu objeknya disimpan di 1 table saja
+    public static void delete(Deletable data, String table)
+    {
+        try {
+            String sql = String.format("delete from " + table +" where " + data.getColId() + " = %d", 
+                data.getId());
+            Koneksi.update(sql);
+        } catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        
+    }
 }

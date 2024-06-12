@@ -292,9 +292,10 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                         selectedMotor.getIdMotor());
                 Koneksi.update(sql);
                 
-                sql = String.format("delete from motor where id_motor = %d and id_pemilik = %d", 
-                        selectedMotor.getIdMotor(), selectedMotor.getIdPemilik());
-                Koneksi.update(sql);
+                // sql = String.format("delete from motor where id_motor = %d and id_pemilik = %d", 
+                //         selectedMotor.getIdMotor(), selectedMotor.getIdPemilik());
+                // Koneksi.update(sql);
+                Koneksi.delete(selectedMotor, "motor");
                 
                 hm.refresh();
                 JOptionPane. showMessageDialog (null, "Pemesanan berhasil lmo"
