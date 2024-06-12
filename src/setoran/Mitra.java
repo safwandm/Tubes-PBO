@@ -5,60 +5,46 @@
  */
 package setoran;
 
+import java.util.ArrayList;
+
 
 /**
  *
  * @author daman1k
  */
 public class Mitra extends User {
-    
-    private Motor disewakan;
-
+    ArrayList<Motor> listMotor = new ArrayList<>();
     public Mitra(int idUser, String username, String password, int umur) {
         super(idUser, username, password, umur, "Mitra");
+        
+        
+    }
+
+public ArrayList<Motor> getListMotor() {
+        try {
+            
+            String sql = String.format("Select * from Motor where id_pemilik = '%s'", this.getIdUser());
+            Koneksi.query(sql);
+            while (Koneksi.rs.next()) {                
+                listMotor.add(new Motor(
+                        Koneksi.rs.getInt("id_motor"),
+                        Koneksi.rs.getString("plat_nomor"),
+                        Koneksi.rs.getString("brand"),
+                        Koneksi.rs.getString("tipe"),
+                        Koneksi.rs.getString("tahun"),
+                        Koneksi.rs.getString("transmisi"),
+                        Koneksi.rs.getString("status_motor"),
+                        Koneksi.rs.getInt("silinder"),
+                        Koneksi.rs.getInt("harga_harian"),
+                        Koneksi.rs.getInt("id_pemilik")
+                    )
+                );
+            } 
+        } catch (Exception e) {}
+        
+        return listMotor;
     }
     
-    public Motor getDisewa() {
-        return disewakan;
-    }
     
-    @Override
-    public void UserInfo() {
-//        System.out.printf("\nNama: %s\nUmur: %s\nMotor yang disewakan: ", this.getUsername(), this.getUmur());
-//        if (disewakan != null) {
-//            System.out.println(disewakan.getNama());
-//            System.out.println("Harga sewa: "+disewakan.getHargaSewa());
-//            
-//            if (!disewakan.isTersedia()) {
-//                System.out.println("Penyewa: " + disewakan.getPenyewa().getUsername());
-//            }
-//            
-//        } else {
-//            System.out.println("-");
-//        }
-    }
-    
-//    public void menyewakanM(Motor m, KatalogM k) {
-//        if (disewakan == null) {
-//            k.addMotor(m);
-//            disewakan = m;
-//            System.out.printf("\n%s telah berhasil disewakan\n", m.getNama());
-//        } else {
-//            System.out.println("\nAnda sudah menyewakan: "+disewakan.getNama());
-//        }
-//    }   
-//    
-//    public void mencabutM(KatalogM k) {
-//        if (disewakan != null) {
-//            if (disewakan.isTersedia()) {
-//                k.removeMotor(disewakan);
-//                disewakan = null;
-//                System.out.println("\nMotor teah berhasil dicabut");
-//            } else {
-//                System.out.println("\nMotor sedang disewa pelanggan");
-//            }
-//        } else {
-//            System.out.println("\nAnda tidak sedang menyewakan motor");
-//        }
-//    } 
+        
 }

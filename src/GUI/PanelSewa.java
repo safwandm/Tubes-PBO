@@ -294,21 +294,9 @@ public class PanelSewa extends javax.swing.JPanel {
     }//GEN-LAST:event_transmisiDropdownActionPerformed
 
     private void motorTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_motorTableMouseClicked
-//        ListSelectionModel selectedModel = motorTable.getSelectionModel();
-//        if (!selectedModel.equals(null)) {
-//            String nomorPlat = selectedModel.get
-//        }
-//        int selectedRowIdx = motorTable.getSelectedRow();
-//        if (selectedRowIdx != -1) {
-//            String nomorPlat = motorTable.getModel().getValueAt(selectedRowIdx, 1).toString();
-//            System.out.println(nomorPlat);
-//            
-//            
-//        }
 
         selectedMotor = listMotor.get(motorTable.getSelectedRow());
         if (selectedMotor != null) {
-            System.out.println(selectedMotor.getTipe());
             nomorPolisiLabel.setText(selectedMotor.getPlatNomor());
             brandLabel.setText(selectedMotor.getBrand());
             tipeLabel.setText(selectedMotor.getTipe());

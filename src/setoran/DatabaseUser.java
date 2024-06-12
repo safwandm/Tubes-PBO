@@ -14,7 +14,6 @@ import java.sql.*;
 public class DatabaseUser extends DefaultTableModel {
     private static ArrayList<User> registeredUser = new ArrayList<>();
     public static User currentUser;
-//    private static Connection cn;
     
     public static boolean isUsernameExist(String username) {
         for (User user : registeredUser){
@@ -40,7 +39,6 @@ public class DatabaseUser extends DefaultTableModel {
             Koneksi.update(sql);
         } catch (Exception e) {
             System.out.println("RegisterError" + e.getMessage());
-//            return null;
         }
     }
     
