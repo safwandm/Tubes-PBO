@@ -53,6 +53,8 @@ public class Koneksi {
         return null;
     }
     
+    // parameter structure berisi list 2 dimensi, dengan format {{[nama kolom], [tipe data kolom]}, {[nama kolom], [tipe data kolom]}}
+    // untuk tipe data gunakan enum Koneksi.RowType
     public static List<List<Object>> query(String sql, String[][] structure) {
         try {
             st = koneksi.prepareStatement(sql);
