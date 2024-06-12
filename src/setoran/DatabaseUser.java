@@ -24,9 +24,6 @@ public class DatabaseUser extends DefaultTableModel {
         return true;
     }
     
-    public static void registerUser(User user){
-        registeredUser.add(user);
-    }
     
     public static void registerUser(String tipeAkun, String username, String password, int age) {
         try {
@@ -35,7 +32,6 @@ public class DatabaseUser extends DefaultTableModel {
                 + password + "', '"
                 + age + "', '"
                 + tipeAkun + "')");
-//            st.executeUpdate(sql);
             Koneksi.update(sql);
         } catch (Exception e) {
             System.out.println("RegisterError" + e.getMessage());

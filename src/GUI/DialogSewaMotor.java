@@ -152,7 +152,8 @@ public class DialogSewaMotor extends javax.swing.JDialog {
             this.dispose();
             ((HomePage)this.getParent()).refresh();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            JOptionPane. showMessageDialog (null, "Motor masih disewa pelanggan"
+                , "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnConfirmTransactionActionPerformed
 

@@ -122,7 +122,6 @@ public class PanelRiwayat extends javax.swing.JPanel {
                 model.addRow(rowData);
             }
         } catch (SQLException ex) {
-            System.out.println("error");
             Logger.getLogger(PanelRiwayat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

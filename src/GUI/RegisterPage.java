@@ -6,8 +6,6 @@ package GUI;
 
 import javax.swing.JOptionPane;
 import setoran.DatabaseUser;
-import setoran.Mitra;
-import setoran.Pelanggan;
 import setoran.User;
 
 /**
@@ -192,25 +190,20 @@ public class RegisterPage extends javax.swing.JFrame {
                     return;
                 }
                 if (age < 18 || age > 90) {
-                    //JOptionPane.showMessageDialog(this, "Umur tidak valid", "age", JOptionPane.ERROR_MESSAGE);
                     txtError.setText("Umur tidak valid");
                     return;
                 }
 
                 if (tipeUser.equals("mitra")){
                     DatabaseUser.registerUser("Mitra", username, password, age);
-//                    user = new Mitra(username, password, age);
                 } else if (tipeUser.equals("pelanggan")) {
                     DatabaseUser.registerUser("Pelanggan", username, password, age);
-//                    user = new Pelanggan(username, password, age);
                 }
-//                DatabaseUser.registerUser(user);
                 
                 JOptionPane.showMessageDialog(this, "Akun " + tipeUser + " berhasil dibuat");
                 LoginPage login = new LoginPage();
                 this.dispose();
             } else {
-                //JOptionPane.showMessageDialog(this, "Semua field harus terisi");
                 txtError.setText("Semua field harus terisi");
             }
         } catch(Exception ex) {
@@ -218,11 +211,8 @@ public class RegisterPage extends javax.swing.JFrame {
             
             if (ex instanceof NumberFormatException) {
                 txtError.setText("Umur harus dalam format angka");
-                //JOptionPane.showMessageDialog(this, "Umur harus dalam format angka");
             }
         }
-        
-        
         
     }//GEN-LAST:event_btnDaftarActionPerformed
 

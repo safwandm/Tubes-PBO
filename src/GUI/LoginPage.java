@@ -6,7 +6,6 @@ package GUI;
 
 import javax.swing.JOptionPane;
 import setoran.DatabaseUser;
-import setoran.Transaksi;
 import setoran.User;
 
 /**
