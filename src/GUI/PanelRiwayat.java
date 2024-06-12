@@ -24,12 +24,7 @@ public class PanelRiwayat extends javax.swing.JPanel {
 
     public PanelRiwayat(JFrame homepage) {
         initComponents();
-        model = (DefaultTableModel) jTable1.getModel();
-        
-        if (DatabaseUser.currentUser.getTipeAkun().equals("Mitra")) {
-            jLabel1.setText("Riwayat Penyewaan");
-        }
-        
+        model = (DefaultTableModel) jTable1.getModel();        
         getData();
     }
 
@@ -58,9 +53,17 @@ public class PanelRiwayat extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "No", "Tanggal Mulai", "Tanggal Selesai", "Motor", "Nominal"
+                "No", "Motor", "Tanggal Mulai", "Tanggal Selesai", "Nominal"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.setRowHeight(30);
         jScrollPane1.setViewportView(jTable1);
 
@@ -103,24 +106,23 @@ public class PanelRiwayat extends javax.swing.JPanel {
             sql = "SELECT * FROM vu_join_transaksi_motor WHERE id_pemilik = " + DatabaseUser.currentUser.getIdUser();
         } else {
             sql = "SELECT * FROM vu_join_transaksi_motor WHERE id_user = " + DatabaseUser.currentUser.getIdUser();
-        }
-        
-        
+        }        
         Koneksi.query(sql);
+        
         int no = 1;
         try {
             while (Koneksi.rs.next()) {
                 int idTransaksi = Koneksi.rs.getInt("id_transaksi");
+                String namaMotor = Koneksi.rs.getString("nama_motor");
                 Date tanggalMulai = Koneksi.rs.getDate("tanggal_mulai");
                 Date tanggalSelesai = Koneksi.rs.getDate("tanggal_selesai");
-                String namaMotor = Koneksi.rs.getString("nama_motor");
                 int nominal = Koneksi.rs.getInt("nominal");
                 
-                Object[] rowData = {no++, tanggalMulai, tanggalSelesai, namaMotor,nominal};
+                Object[] rowData = {no++, namaMotor, tanggalMulai, tanggalSelesai ,nominal};
                 model.addRow(rowData);
             }
         } catch (SQLException ex) {
-            System.out.println("eror");
+            System.out.println("error");
             Logger.getLogger(PanelRiwayat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

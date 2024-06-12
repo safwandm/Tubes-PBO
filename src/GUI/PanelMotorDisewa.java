@@ -381,15 +381,18 @@ public class PanelMotorDisewa extends javax.swing.JPanel {
                 Koneksi.rs.getInt("id_pemilik")
             );
             
-            sewaHarian = Transaksi.getHariSewa(Koneksi.rs.getString("tanggal_mulai"), Koneksi.rs.getString("tanggal_selesai"));
+            try {
+                sewaHarian = Transaksi.getHariSewa(Koneksi.rs.getString("tanggal_mulai"), Koneksi.rs.getString("tanggal_selesai"));
+            } catch (Exception e) {
+                
+            }
+            
             nominal = Koneksi.rs.getInt("nominal");
             
             sql = String.format("Select * from User where id_user = '%d'", m.getIdPemilik());
             Koneksi.query(sql);
             Koneksi.rs.next();
             
-            namaPemilik = Koneksi.rs.getString("username");
-
             jlNomorPolisi.setText(m.getPlatNomor());
             jlBrand.setText(m.getBrand());
             jlTipe.setText(m.getTipe());

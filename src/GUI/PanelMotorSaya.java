@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -12,6 +14,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import setoran.DatabaseUser;
 import setoran.Koneksi;
+import setoran.Mitra;
 import setoran.Motor;
 
 /**
@@ -32,18 +35,23 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         Koneksi.getConnection();
         model = (DefaultTableModel) motorTable.getModel();
         motorTable.getColumnModel().getColumn(0).setPreferredWidth(25);
-        jpRating.setVisible(false);
-        jpBulanan.setVisible(false);
         getData();
         hm = homepage;
+        
+        btnHapusMotor.setVisible(false);
         
         motorTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
-                    btnHapusMotor.setVisible(true);
-                } else if (motorTable.getSelectedRow() == -1) {
-                    btnHapusMotor.setVisible(false);
+                    
+                    if (motorTable.getSelectedRow() >= 0) {
+                        btnHapusMotor.setVisible(true);
+                        selectedMotor = listMotor.get(motorTable.getSelectedRow());
+                    } else {
+                        btnHapusMotor.setVisible(false);
+                    }
+                    
                 }
             }
         });
@@ -63,11 +71,6 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jpBulanan = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jpRating = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -125,61 +128,6 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Summary");
 
-        jpBulanan.setMaximumSize(new java.awt.Dimension(32767, 100));
-        jpBulanan.setPreferredSize(new java.awt.Dimension(200, 100));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel4.setText("Pendapatan Bulan Ini");
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel8.setText("Rp");
-
-        javax.swing.GroupLayout jpBulananLayout = new javax.swing.GroupLayout(jpBulanan);
-        jpBulanan.setLayout(jpBulananLayout);
-        jpBulananLayout.setHorizontalGroup(
-            jpBulananLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpBulananLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 152, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jpBulananLayout.setVerticalGroup(
-            jpBulananLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpBulananLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpBulananLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpBulananLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
-        jpRating.setPreferredSize(new java.awt.Dimension(200, 100));
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel5.setText("Rating");
-
-        javax.swing.GroupLayout jpRatingLayout = new javax.swing.GroupLayout(jpRating);
-        jpRating.setLayout(jpRatingLayout);
-        jpRatingLayout.setHorizontalGroup(
-            jpRatingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpRatingLayout.createSequentialGroup()
-                .addContainerGap(144, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addContainerGap())
-        );
-        jpRatingLayout.setVerticalGroup(
-            jpRatingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpRatingLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addContainerGap(74, Short.MAX_VALUE))
-        );
-
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel6.setText("Motor Saya");
 
@@ -190,7 +138,16 @@ public class PanelMotorSaya extends javax.swing.JPanel {
             new String [] {
                 "No", "Plat Nomor", "Brand", "Tipe", "Transmisi", "Tahun", "Status"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        motorTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(motorTable);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -217,7 +174,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
             }
         });
 
-        btnHapusMotor.setText("Hapus Motor");
+        btnHapusMotor.setText("Hapus");
         btnHapusMotor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHapusMotorActionPerformed(evt);
@@ -234,20 +191,15 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
+                        .addGap(118, 118, 118)
                         .addComponent(btnHapusMotor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jpBulanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jpRating, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 93, Short.MAX_VALUE)))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 529, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -256,43 +208,36 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jpBulanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jpRating, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
                             .addComponent(btnHapusMotor))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        System.out.println(this.get);
-//        DialogTambahMotor dtm = new DialogTambahMotor((JFrame) (this.getParent().getParent().getParent()), true);
         DialogTambahMotor dtm = new DialogTambahMotor(hm, true);
         dtm.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnHapusMotorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusMotorActionPerformed
         // TODO add your handling code here:
-        selectedMotor = listMotor.get(motorTable.getSelectedRow());        
+        
         if (selectedMotor.getStatusMotor().equals("Tersedia")) {
-            
             try {
 
                 Koneksi.softDelete(selectedMotor, "motor");
                 
-                hm.refresh();
-                JOptionPane. showMessageDialog (null, "Pemesanan berhasil lmo"
+                JOptionPane. showMessageDialog (null, "Motor berhasil dihapus"
                     , "Success", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
                 JOptionPane. showMessageDialog (null, e.getMessage()
@@ -303,6 +248,7 @@ public class PanelMotorSaya extends javax.swing.JPanel {
             JOptionPane. showMessageDialog (null, "Motor masih disewa pelanggan"
                 , "Error", JOptionPane.ERROR_MESSAGE);
         }
+        hm.refresh();
     }//GEN-LAST:event_btnHapusMotorActionPerformed
 
 
@@ -312,52 +258,27 @@ public class PanelMotorSaya extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel jpBulanan;
-    private javax.swing.JPanel jpRating;
     private javax.swing.JTable motorTable;
     // End of variables declaration//GEN-END:variables
 
     public void getData() {
         clearTable();
         int n = 0;
-        
         try {
             
-            int idUser = DatabaseUser.currentUser.getIdUser();
-            
-            sql = "SELECT * FROM vu_join_transaksi_motor WHERE id_pemilik = " + idUser + " and status_transaksi = 'aktif'";
+            String sql = "SELECT * FROM vu_join_transaksi_motor WHERE id_pemilik = " + DatabaseUser.currentUser.getIdUser() + " and status_transaksi = 'aktif'" ;
             Koneksi.query(sql);
             while (Koneksi.rs.next()) {
                 n += Koneksi.rs.getInt("nominal");
             }
             
-            sql = String.format("Select * from Motor where id_pemilik = '%s' and deleted = 'false'", idUser);
-            Koneksi.query(sql);
+            listMotor = ((Mitra)DatabaseUser.currentUser).getListMotor();
             
-            while (Koneksi.rs.next()) {                
-                listMotor.add(new Motor(
-                        Koneksi.rs.getInt("id_motor"),
-                        Koneksi.rs.getString("plat_nomor"),
-                        Koneksi.rs.getString("brand"),
-                        Koneksi.rs.getString("tipe"),
-                        Koneksi.rs.getString("tahun"),
-                        Koneksi.rs.getString("transmisi"),
-                        Koneksi.rs.getString("status_motor"),
-                        Koneksi.rs.getInt("silinder"),
-                        Koneksi.rs.getInt("harga_harian"),
-                        Koneksi.rs.getInt("id_pemilik")
-                    )
-                );
-            }
-                 
             Motor tempM;
             for (int i = 0; i < listMotor.size(); i++) {
                 tempM = listMotor.get(i);
@@ -372,7 +293,6 @@ public class PanelMotorSaya extends javax.swing.JPanel {
                 };
                 model.addRow(rowData);
             }
-                        
             jLabel7.setText(Integer.toString(n));
         } catch (SQLException e) {
             System.out.println(e.getMessage());
