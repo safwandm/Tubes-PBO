@@ -46,9 +46,6 @@ public class PanelSewa extends javax.swing.JPanel {
         BrandDropdown = new javax.swing.JComboBox<>();
         transmisiFilterLabel = new javax.swing.JLabel();
         transmisiDropdown = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -122,14 +119,6 @@ public class PanelSewa extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("Tipe");
-
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        jButton2.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jButton2.setText("🔍");
-
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -195,12 +184,7 @@ public class PanelSewa extends javax.swing.JPanel {
                         .addComponent(transmisiFilterLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(transmisiDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addGap(225, 225, 225)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,12 +258,9 @@ public class PanelSewa extends javax.swing.JPanel {
                             .addComponent(BrandDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addComponent(transmisiFilterLabel)
-                            .addComponent(transmisiDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2))
+                            .addComponent(transmisiDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))
                     .addComponent(jSeparator1))
                 .addContainerGap())
         );
@@ -329,8 +310,6 @@ public class PanelSewa extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> BrandDropdown;
     private javax.swing.JLabel brandLabel;
     private javax.swing.JLabel hargaLabel;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -342,7 +321,6 @@ public class PanelSewa extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable motorTable;
     private javax.swing.JLabel nomorPolisiLabel;
     private javax.swing.JButton sewaBtn;
@@ -407,34 +385,6 @@ public class PanelSewa extends javax.swing.JPanel {
         }
         return false;
     }
-
-    
-//    private void getData(String brand) {
-//        DefaultTableModel model = (DefaultTableModel) motorTable.getModel();
-//        model.setRowCount(0);
-//        
-//        try {
-//            String sql = "SELECT * FROM motor WHERE status_motor = 'Tersedia' and brand = '" + brand + "'";
-////            PreparedStatement st = conn.prepareStatement(sql);
-////            ResultSet rs = st.executeQuery(sql);
-//            ResultSet rs = Koneksi.query(sql);
-//            
-//            while(rs.next()){
-//                String platNomor = rs.getString("plat_nomor");
-//                String brands = rs.getString("brand");
-//                String tipe = rs.getString("tipe");
-//                String tahun = rs.getString("tahun");
-//                
-//                Object[] rowData = {platNomor, brands, tipe, tahun};
-//                model.addRow(rowData);
-//            }
-//            
-//            rs.close();
-////            st.close();
-//        } catch (Exception e) {
-//            Logger.getLogger(Koneksi.class.getName()).log(Level.SEVERE, null, e);
-//        }
-//    }
     
     private void clearTable() {
         model.setRowCount(0);
