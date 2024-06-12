@@ -5,11 +5,11 @@
 package GUI;
 
 import java.sql.SQLException;
-import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import setoran.DatabaseUser;
 import setoran.Koneksi;
-import setoran.Mitra;
 import setoran.Motor;
+import setoran.Pelanggan;
 import setoran.Transaksi;
 
 /**
@@ -312,9 +312,6 @@ public class PanelMotorDisewa extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReturnMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnMActionPerformed
-//        System.out.println(this.get);
-//        DialogTambahMotor dtm = new DialogTambahMotor((JFrame) (this.getParent().getParent().getParent()), true);
-    
         try {
             sql = String.format("update transaksi set status_transaksi = 'selesai' where id_user = %d", DatabaseUser.currentUser.getIdUser());
             Koneksi.update(sql);
@@ -325,10 +322,9 @@ public class PanelMotorDisewa extends javax.swing.JPanel {
             hm.refresh();
             
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            JOptionPane. showMessageDialog (null, e.getMessage()
+                , "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
-        
     }//GEN-LAST:event_btnReturnMActionPerformed
 
 
@@ -361,31 +357,12 @@ public class PanelMotorDisewa extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void getData() {
-        try {
-            int idUser = DatabaseUser.currentUser.getIdUser();
-            
-            sql = String.format("Select * from vu_join_transaksi_motor where id_user = '%s' and status_transaksi = 'aktif'", idUser);
-            Koneksi.query(sql);
-            Koneksi.rs.next();
-            
-            m = new Motor(
-                Koneksi.rs.getInt("id_motor"),
-                Koneksi.rs.getString("plat_nomor"),
-                Koneksi.rs.getString("brand"),
-                Koneksi.rs.getString("tipe"),
-                Koneksi.rs.getString("tahun"),
-                Koneksi.rs.getString("transmisi"),
-                Koneksi.rs.getString("status_motor"),
-                Koneksi.rs.getInt("silinder"),
-                Koneksi.rs.getInt("harga_harian"),
-                Koneksi.rs.getInt("id_pemilik")
-            );
+        try {            
             
             try {
+                m = ((Pelanggan)DatabaseUser.currentUser).getMotorDisewa();
                 sewaHarian = Transaksi.getHariSewa(Koneksi.rs.getString("tanggal_mulai"), Koneksi.rs.getString("tanggal_selesai"));
-            } catch (Exception e) {
-                
-            }
+            } catch (Exception e) {}
             
             nominal = Koneksi.rs.getInt("nominal");
             
@@ -404,19 +381,23 @@ public class PanelMotorDisewa extends javax.swing.JPanel {
             jlHariSewa.setText(sewaHarian.toString());
             btnReturnM.setVisible(true);
                                     
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {            
+            if (e.getMessage().equals("Illegal operation on empty result set.")) {
+                btnReturnM.setVisible(false);
+                jlNomorPolisi.setText("-");
+                jlBrand.setText("-");
+                jlTipe.setText("-");
+                jlTahun.setText("-");
+                jlTransmisi.setText("-");
+                jlSilinder.setText("-");
+                jlHarga.setText("-");
+                jlTotalHarga.setText("-");
+                jlHariSewa.setText("-");
+            } else {
+                JOptionPane. showMessageDialog (null, e.getMessage()
+                    , "Error", JOptionPane.ERROR_MESSAGE);
+            }
             
-            btnReturnM.setVisible(false);
-            jlNomorPolisi.setText("-");
-            jlBrand.setText("-");
-            jlTipe.setText("-");
-            jlTahun.setText("-");
-            jlTransmisi.setText("-");
-            jlSilinder.setText("-");
-            jlHarga.setText("-");
-            jlTotalHarga.setText("-");
-            jlHariSewa.setText("-");
         }
     }
 }

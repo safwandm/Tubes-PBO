@@ -4,8 +4,6 @@
  */
 package GUI;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -27,7 +25,6 @@ public class PanelMotorSaya extends javax.swing.JPanel {
     DefaultTableModel model;
     ArrayList<Motor> listMotor = new ArrayList<>();
     Motor selectedMotor;    
-    
     String sql;
     
     public PanelMotorSaya(HomePage homepage) {
@@ -231,7 +228,6 @@ public class PanelMotorSaya extends javax.swing.JPanel {
 
     private void btnHapusMotorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusMotorActionPerformed
         // TODO add your handling code here:
-        
         if (selectedMotor.getStatusMotor().equals("Tersedia")) {
             try {
 
@@ -270,7 +266,6 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         clearTable();
         int n = 0;
         try {
-            
             String sql = "SELECT * FROM vu_join_transaksi_motor WHERE id_pemilik = " + DatabaseUser.currentUser.getIdUser() + " and status_transaksi = 'aktif'" ;
             Koneksi.query(sql);
             while (Koneksi.rs.next()) {
@@ -295,7 +290,8 @@ public class PanelMotorSaya extends javax.swing.JPanel {
             }
             jLabel7.setText(Integer.toString(n));
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            JOptionPane. showMessageDialog (null, e.getMessage()
+                , "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     

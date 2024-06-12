@@ -16,13 +16,10 @@ public class Mitra extends User {
     ArrayList<Motor> listMotor = new ArrayList<>();
     public Mitra(int idUser, String username, String password, int umur) {
         super(idUser, username, password, umur, "Mitra");
-        
-        
     }
 
-public ArrayList<Motor> getListMotor() {
+    public ArrayList<Motor> getListMotor() {
         try {
-            
             String sql = String.format("Select * from Motor where id_pemilik = '%s' and deleted = 'false'", this.getIdUser());
             Koneksi.query(sql);
             while (Koneksi.rs.next()) {                
@@ -44,7 +41,4 @@ public ArrayList<Motor> getListMotor() {
         
         return listMotor;
     }
-    
-    
-        
 }

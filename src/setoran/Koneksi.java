@@ -78,7 +78,6 @@ public class Koneksi {
             System.out.println(e.getMessage());
         }
     }
-
     
     public static <T> List <T> resultSetToObject(ResultSet resultSet, Class<T> clazz) throws SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
 
@@ -104,9 +103,7 @@ public class Koneksi {
                 }
 
             }
-
             list.add(dto);
-
         }
         return list;
     }

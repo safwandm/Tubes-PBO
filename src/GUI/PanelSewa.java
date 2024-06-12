@@ -7,7 +7,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import setoran.*;
@@ -360,7 +359,6 @@ public class PanelSewa extends javax.swing.JPanel {
                     )
                 );
             }
-            
             for (int i = 0; i < listMotor.size(); i++) {
                 Object[] rowData = {i + 1, listMotor.get(i).getPlatNomor(),listMotor.get(i).getBrand(), listMotor.get(i).getTipe(), listMotor.get(i).getTransmisi(), listMotor.get(i).getTahun()};
                 model.addRow(rowData);

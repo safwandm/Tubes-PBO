@@ -79,20 +79,14 @@ public class Transaksi {
     }
     
     public int getHariSewa() {
-        
-        
-                
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        // Parse the strings to LocalDate
         LocalDate startDate = LocalDate.parse(tgl_mulai, formatter);
         LocalDate endDate = LocalDate.parse(tgl_selesai, formatter);
 
-        // Calculate the number of days between
         long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
         
         return (int)daysBetween;
-        
     }
     public static int getHariSewa(String tgl_mulai, String tgl_selesai) throws Exception {
              

@@ -60,5 +60,4 @@ public abstract class User {
     public void setUmur(int umur) {
         this.umur = umur;
     } 
-    
 }
