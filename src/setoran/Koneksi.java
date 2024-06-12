@@ -7,8 +7,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Arrays;
 
 import javax.swing.JOptionPane;
 /**
@@ -52,6 +52,18 @@ public class Koneksi {
         }
         return null;
     }
+    
+    // parameter structure berisi list 2 dimensi, dengan format {{[nama kolom], [tipe data kolom]}, {[nama kolom], [tipe data kolom]}}
+    // untuk tipe data gunakan enum Koneksi.RowType
+    public static List<List<Object>> query(String sql, String[][] structure) {
+        try {
+            st = koneksi.prepareStatement(sql);
+            return resultSetToObject(st.executeQuery(sql), structure);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 
     public static void disconnect() throws SQLException {
         koneksi.close();
@@ -67,6 +79,7 @@ public class Koneksi {
         }
     }
 
+    
     public static <T> List <T> resultSetToObject(ResultSet resultSet, Class<T> clazz) throws SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
 
         List<Field> fields = Arrays.asList(clazz.getDeclaredFields());
@@ -81,12 +94,13 @@ public class Koneksi {
 
             for(Field field: fields) {
                 String name = field.getName();
-
+                
                 try{
                     String value = resultSet.getString(name);
                     field.set(dto, field.getType().getConstructor(String.class).newInstance(value));
                 } catch (Exception e) {
                     e.printStackTrace();
+                    throw e;
                 }
 
             }
@@ -95,5 +109,58 @@ public class Koneksi {
 
         }
         return list;
+    }
+    
+    public enum RowType { number, string, date };
+    public static List<List<Object>> resultSetToObject(ResultSet resultSet, String[][] structure) throws SQLException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+
+
+        List<List<Object>> list = new ArrayList<>();
+        while(resultSet.next()) {
+
+            List<Object> obj = new ArrayList<Object>();
+
+            for(String[] field: structure) {
+                
+                try{
+                    if (RowType.number.toString().equals(field[1]))
+                        obj.add(resultSet.getInt(field[0]));
+                    else if (RowType.string.toString().equals(field[1]))
+                        obj.add(resultSet.getString(field[0]));
+                    else
+                        obj.add(resultSet.getDate(field[0]));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw e;
+                }
+
+            }
+
+            list.add(obj);
+
+        }
+        return list;
+    }
+
+    // ada parameter table karena belum tentu objeknya disimpan di 1 table saja
+    public static void delete(Deletable data, String table) {
+        try {
+            String sql = String.format("delete from " + table +" where " + data.getColId() + " = %d", 
+                data.getId());
+            Koneksi.update(sql);
+        } catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        
+    }
+
+    public static void softDelete(Deletable data, String table) {
+        try {
+            String sql = String.format("update %s set deleted='true' where %s=%d", 
+                table, data.getColId(), data.getId());
+            Koneksi.update(sql);
+        } catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
     }
 }

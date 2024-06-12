@@ -23,7 +23,7 @@ public class Mitra extends User {
 public ArrayList<Motor> getListMotor() {
         try {
             
-            String sql = String.format("Select * from Motor where id_pemilik = '%s'", this.getIdUser());
+            String sql = String.format("Select * from Motor where id_pemilik = '%s' and deleted = 'false'", this.getIdUser());
             Koneksi.query(sql);
             while (Koneksi.rs.next()) {                
                 listMotor.add(new Motor(

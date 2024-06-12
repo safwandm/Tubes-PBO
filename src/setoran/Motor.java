@@ -9,7 +9,7 @@ package setoran;
  *
  * @author daman1k
  */
-public class Motor {
+public class Motor implements Deletable{
     private int idMotor;
     private String platNomor;
     private String brand;
@@ -19,21 +19,7 @@ public class Motor {
     private String statusMotor;
     private int silinder;
     private int hargaHarian;
-    private int idPemilik;
-    
-//    private String nama;
-//    private User pemilik;
-//    private Pelanggan penyewa;
-//    private int hargaSewa;
-//    private boolean tersedia;
-
-//    public Motor(String nama, User pemilik, int hargaSewa) {
-//        this.nama = nama;
-//        this.pemilik = pemilik;
-//        this.hargaSewa = hargaSewa;
-//        tersedia = true;
-//    }    
-    
+    private int idPemilik;    
 
     public Motor(int id_motor, String plat_nomor, String brand, String tipe, String tahun, String transmisi, String status_motor, int silinder, int harga_harian, int id_pemilik) {
         this.idMotor = id_motor;
@@ -50,6 +36,12 @@ public class Motor {
 
     public int getIdMotor() {
         return idMotor;
+    }
+    public int getId(){
+        return idMotor;
+    }
+    public String getColId() {
+        return "id_motor";
     }
 
     public void setIdMotor(int idMotor) {
@@ -127,37 +119,5 @@ public class Motor {
     public void setIdPemilik(int idPemilik) {
         this.idPemilik = idPemilik;
     }
-    
-//    public String getNama() {
-//        return nama;
-//    }
-//
-//    public User getPemilik() {
-//        return pemilik;
-//    }
-//    
-//    public User getPenyewa() {
-//        return penyewa;
-//    }
-//
-//    public void setPenyewa(User pemilik) {
-//        this.pemilik = pemilik;
-//    }
-//
-//    public int getHargaSewa() {
-//        return hargaSewa;
-//    }
-//    
-//    public boolean isTersedia() {
-//        return tersedia;
-//    }
-//
-//    public void setTersedia(boolean tersedia) {
-//        this.tersedia = tersedia;
-//    }
-//
-//    public void motorInfo() {
-//        System.out.printf("Nama: %s\nPemilik: %s\nHarga sewa: %d\n", nama, pemilik.getUsername(), hargaSewa);
-//    }
-    
+        
 }

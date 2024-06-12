@@ -234,15 +234,10 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         
         if (selectedMotor.getStatusMotor().equals("Tersedia")) {
             try {
-                sql = String.format("delete from transaksi where id_motor = %d", 
-                        selectedMotor.getIdMotor());
-                Koneksi.update(sql);
+
+                Koneksi.softDelete(selectedMotor, "motor");
                 
-                sql = String.format("delete from motor where id_motor = %d and id_pemilik = %d", 
-                        selectedMotor.getIdMotor(), selectedMotor.getIdPemilik());
-                Koneksi.update(sql);
-                
-                JOptionPane. showMessageDialog (null, "Penyewaan berhasil"
+                JOptionPane. showMessageDialog (null, "Motor berhasil dihapus"
                     , "Success", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
                 JOptionPane. showMessageDialog (null, e.getMessage()
@@ -275,7 +270,6 @@ public class PanelMotorSaya extends javax.swing.JPanel {
         clearTable();
         int n = 0;
         try {
-            
             
             String sql = "SELECT * FROM vu_join_transaksi_motor WHERE id_pemilik = " + DatabaseUser.currentUser.getIdUser() + " and status_transaksi = 'aktif'" ;
             Koneksi.query(sql);
