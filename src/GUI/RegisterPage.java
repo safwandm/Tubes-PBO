@@ -42,7 +42,6 @@ public class RegisterPage extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         fieldUsername = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        fieldUmur = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         fieldPassword = new javax.swing.JTextField();
         MitraRadio = new javax.swing.JRadioButton();
@@ -52,6 +51,7 @@ public class RegisterPage extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
         btnDaftar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        fieldUmur = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -65,12 +65,6 @@ public class RegisterPage extends javax.swing.JFrame {
         jLabel2.setText("Username");
 
         jLabel3.setText("Umur");
-
-        fieldUmur.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldUmurActionPerformed(evt);
-            }
-        });
 
         jLabel4.setText("Password");
 
@@ -95,7 +89,7 @@ public class RegisterPage extends javax.swing.JFrame {
         txtError.setText(" ");
         txtError.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        btnLogin.setText("Login");
+        btnLogin.setText("Kembali");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
@@ -131,8 +125,8 @@ public class RegisterPage extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                             .addComponent(fieldUmur)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                             .addComponent(fieldUsername)
                             .addComponent(fieldPassword)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -173,20 +167,26 @@ public class RegisterPage extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fieldUmurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldUmurActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldUmurActionPerformed
-
     private void btnDaftarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDaftarActionPerformed
         // TODO add your handling code here:
         try {
-            if (!fieldUsername.getText().isBlank() && !fieldPassword.getText().isBlank() && !fieldUmur.getText().isBlank() && tipeUser != null) {
+            if ((int) fieldUmur.getValue() > 0 && !fieldUsername.getText().isBlank() && !fieldPassword.getText().isBlank() && tipeUser != null) {
                 username = fieldUsername.getText();
                 password = fieldPassword.getText();
-                age = Integer.parseInt(fieldUmur.getText());
+                age = (int) fieldUmur.getValue();
+                
+                
+                int usernameLen = username.length();
+                if (usernameLen < 5) { 
+                    txtError.setText("Username terlalu pendek");
+                    return;
+                } else if (usernameLen > 15) {
+                    txtError.setText("Username terlalu panjang");
+                    return;
+                }
                 
                 if (!DatabaseUser.isUsernameExist(username)) {
-                    JOptionPane.showMessageDialog(this, "Username telah dipakai user lain", "username", JOptionPane.ERROR_MESSAGE);
+                    txtError.setText("Username telah dipakai user lain");
                     return;
                 }
                 if (age < 18 || age > 90) {
@@ -209,10 +209,13 @@ public class RegisterPage extends javax.swing.JFrame {
         } catch(Exception ex) {
             System.out.println(ex.toString());
             
+            JOptionPane.showMessageDialog(this, ex.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            
             if (ex instanceof NumberFormatException) {
                 txtError.setText("Umur harus dalam format angka");
             }
         }
+        
         
     }//GEN-LAST:event_btnDaftarActionPerformed
 
@@ -275,7 +278,7 @@ public class RegisterPage extends javax.swing.JFrame {
     private javax.swing.JButton btnLogin;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField fieldPassword;
-    private javax.swing.JTextField fieldUmur;
+    private javax.swing.JSpinner fieldUmur;
     private javax.swing.JTextField fieldUsername;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

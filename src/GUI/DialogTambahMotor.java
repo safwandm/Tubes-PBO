@@ -24,6 +24,8 @@ public class DialogTambahMotor extends javax.swing.JDialog {
     int inputTahun;
     String inputTransmisi;
     int inputSilinder;
+    int inputHargaHari;
+    
     PanelMotorSaya panelMotor = null;
 
     public DialogTambahMotor(java.awt.Frame parent, boolean modal) {
@@ -62,6 +64,8 @@ public class DialogTambahMotor extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         silinderSpinner = new javax.swing.JSpinner();
         simpanBtn = new javax.swing.JButton();
+        hargaHariSpinner = new javax.swing.JSpinner();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -94,10 +98,16 @@ public class DialogTambahMotor extends javax.swing.JDialog {
             }
         });
 
+        jLabel8.setText("Harga / Hari");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(154, 154, 154)
+                .addComponent(simpanBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,12 +133,12 @@ public class DialogTambahMotor extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(transmisiBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(silinderSpinner))))
+                            .addComponent(silinderSpinner)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(hargaHariSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(154, 154, 154)
-                .addComponent(simpanBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,9 +169,13 @@ public class DialogTambahMotor extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(silinderSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(simpanBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(hargaHariSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(simpanBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -186,9 +200,74 @@ public class DialogTambahMotor extends javax.swing.JDialog {
         inputTahun = (int) tahunSpinner.getValue();
         inputTransmisi = transmisiBox.getSelectedItem().toString();
         inputSilinder = (int) silinderSpinner.getValue();
-        int hargaHarian = hitungHarga(inputSilinder, inputTransmisi);
+        inputHargaHari = (int) hargaHariSpinner.getValue();
             
         try {
+            
+            int platNomorLen = inputPlatNomor.length();
+            if (platNomorLen < 5) {
+                JOptionPane.showMessageDialog(this, "Plat nomor terlalu pendek", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (platNomorLen > 10) {
+                JOptionPane.showMessageDialog(this, "Plat nomor terlalu panjang", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            int brandLen = inputBrand.length();
+            if (brandLen < 3) {
+                JOptionPane.showMessageDialog(this, "Brand terlalu pendek", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (brandLen > 20) {
+                JOptionPane.showMessageDialog(this, "Brand terlalu panjang", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            int tipeLen = inputTipe.length();
+            if (tipeLen < 3) {
+                JOptionPane.showMessageDialog(this, "Nama tipe terlalu pendek", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (tipeLen > 20) {
+                JOptionPane.showMessageDialog(this, "Nama tipe terlalu panjang", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (inputSilinder < 100) {
+                JOptionPane.showMessageDialog(this, "Silinder terlalu kecil", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (inputSilinder > 250) {
+                JOptionPane.showMessageDialog(this, "Silinder terlalu besar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (inputTahun < 2010) {
+                JOptionPane.showMessageDialog(this, "Motor harus dalam rentang tahun 2010 dan sekarang", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+          
+            if (inputTahun > 2024) {
+                JOptionPane.showMessageDialog(this, "Motor harus dalam rentang tahun 2010 dan sekarang", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }         
+            
+            if (inputHargaHari < 30000) {
+                JOptionPane.showMessageDialog(this, "Harga motor terlalu murah", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+          
+            if (inputHargaHari > 500000) {
+                JOptionPane.showMessageDialog(this, "Harga motor terlalu mahal", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }         
+            
+            
             String sql = String.format("SELECT * FROM motor WHERE plat_nomor='%s' and deleted = 'false'", inputPlatNomor);
             List<Motor> existing = Koneksi.query(sql, Motor.class);
             if (existing == null) {
@@ -196,7 +275,7 @@ public class DialogTambahMotor extends javax.swing.JDialog {
                 return;
             }
             
-            sql = "INSERT INTO `motor` (`id_motor`, `plat_nomor`, `brand`, `tipe`, `tahun`, `transmisi`, `status_motor`, `silinder`, `harga_harian`, `id_pemilik`) VALUES (NULL, '" + inputPlatNomor + "', '" + inputBrand + "', '"+ inputTipe +"', " + inputTahun + ", '" + inputTransmisi + "', 'Tersedia', " + inputSilinder + ", " + hargaHarian + ", " + DatabaseUser.currentUser.getIdUser() + ")";
+            sql = "INSERT INTO `motor` (`id_motor`, `plat_nomor`, `brand`, `tipe`, `tahun`, `transmisi`, `status_motor`, `silinder`, `harga_harian`, `id_pemilik`) VALUES (NULL, '" + inputPlatNomor + "', '" + inputBrand + "', '"+ inputTipe +"', " + inputTahun + ", '" + inputTransmisi + "', 'Tersedia', " + inputSilinder + ", " + inputHargaHari + ", " + DatabaseUser.currentUser.getIdUser() + ")";
             Koneksi.update(sql);
             JOptionPane.showMessageDialog(this, "Berhasil Menambahkan Motor");
             ((HomePage)this.getParent()).refresh();
@@ -253,6 +332,7 @@ public class DialogTambahMotor extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField brandField;
+    private javax.swing.JSpinner hargaHariSpinner;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -260,6 +340,7 @@ public class DialogTambahMotor extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField platNomorField;
     private javax.swing.JSpinner silinderSpinner;
@@ -268,20 +349,25 @@ public class DialogTambahMotor extends javax.swing.JDialog {
     private javax.swing.JTextField tipeField;
     private javax.swing.JComboBox<String> transmisiBox;
     // End of variables declaration//GEN-END:variables
-    private int hitungHarga(int silinder, String transmisi) {
-        if (transmisi.equals("Matic")) {
-            if (silinder < 150) {
-                return 45000;
-            } else if (silinder >= 150) {
-                return 55000;
-            }
-        } else {
-            if (silinder < 150) {
-                return 40000;
-            } else if (silinder >= 150) {
-                return 60000;
-            }
-        }
-        return 0;
-    }
+
+
+//Cara lama menghitung harga
+//Diganti untuk PPL
+    
+//    private int hitungHarga(int silinder, String transmisi) {
+//        if (transmisi.equals("Matic")) {
+//            if (silinder < 150) {
+//                return 45000;
+//            } else if (silinder >= 150) {
+//                return 55000;
+//            }
+//        } else {
+//            if (silinder < 150) {
+//                return 40000;
+//            } else if (silinder >= 150) {
+//                return 60000;
+//            }
+//        }
+//        return 0;
+//    }
 }
