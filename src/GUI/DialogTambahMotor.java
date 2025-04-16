@@ -203,6 +203,71 @@ public class DialogTambahMotor extends javax.swing.JDialog {
         inputHargaHari = (int) hargaHariSpinner.getValue();
             
         try {
+            
+            int platNomorLen = inputPlatNomor.length();
+            if (platNomorLen < 5) {
+                JOptionPane.showMessageDialog(this, "Plat nomor terlalu pendek", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (platNomorLen > 10) {
+                JOptionPane.showMessageDialog(this, "Plat nomor terlalu panjang", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            int brandLen = inputBrand.length();
+            if (brandLen < 3) {
+                JOptionPane.showMessageDialog(this, "Brand terlalu pendek", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (brandLen > 20) {
+                JOptionPane.showMessageDialog(this, "Brand terlalu panjang", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            int tipeLen = inputTipe.length();
+            if (tipeLen < 3) {
+                JOptionPane.showMessageDialog(this, "Nama tipe terlalu pendek", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (tipeLen > 20) {
+                JOptionPane.showMessageDialog(this, "Nama tipe terlalu panjang", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (inputSilinder < 100) {
+                JOptionPane.showMessageDialog(this, "Silinder terlalu kecil", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (inputSilinder > 250) {
+                JOptionPane.showMessageDialog(this, "Silinder terlalu besar", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (inputTahun < 2010) {
+                JOptionPane.showMessageDialog(this, "Motor harus dalam rentang tahun 2010 dan sekarang", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+          
+            if (inputTahun > 2024) {
+                JOptionPane.showMessageDialog(this, "Motor harus dalam rentang tahun 2010 dan sekarang", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }         
+            
+            if (inputHargaHari < 30000) {
+                JOptionPane.showMessageDialog(this, "Harga motor terlalu murah", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+          
+            if (inputHargaHari > 500000) {
+                JOptionPane.showMessageDialog(this, "Harga motor terlalu mahal", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }         
+            
+            
             String sql = String.format("SELECT * FROM motor WHERE plat_nomor='%s' and deleted = 'false'", inputPlatNomor);
             List<Motor> existing = Koneksi.query(sql, Motor.class);
             if (existing == null) {
